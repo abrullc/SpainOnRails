@@ -11,12 +11,12 @@
         android:icon="@drawable/ic_train"/>
 
     <item
-        android:id="@+id/bottom_rutas"
+        android:id="@+id/bottom_routes"
         android:title="@string/routes"
         android:icon="@drawable/ic_route"/>
 
     <item
-        android:id="@+id/bottom_estaciones"
+        android:id="@+id/bottom_stations"
         android:title="@string/stations"
         android:icon="@drawable/ic_station"/>
 </menu>
