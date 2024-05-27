@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="md_theme_primary">#755B0B</color>
+    <color name="md_theme_primary80">#EEC144</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#FFDF94</color>
     <color name="md_theme_onPrimaryContainer">#241A00</color>
     <color name="md_theme_secondary">#745B0B</color>
+    <color name="md_theme_secondary50">#887546</color>
     <color name="md_theme_onSecondary">#FFFFFF</color>
     <color name="md_theme_secondaryContainer">#FFDF93</color>
     <color name="md_theme_onSecondaryContainer">#241A00</color>
