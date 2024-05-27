@@ -54,6 +54,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initComponents() {
-        bottonNavigationView = findViewById(R.id.bottom_nav)
+        bottonNavigationView = findViewById(R.id.bottomNav)
     }
 }
