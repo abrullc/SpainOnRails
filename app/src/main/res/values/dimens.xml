@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="icon_size">32dp</dimen>
-    <dimen name="large_padding">32dp</dimen>
+    <dimen name="common_margin_min">8dp</dimen>
+    <dimen name="common_margin_default">16dp</dimen>
     <dimen name="common_padding">16dp</dimen>
+    <dimen name="common_padding_default">16dp</dimen>
+    <dimen name="large_padding">32dp</dimen>
+    <dimen name="tv_new_user_height">32dp</dimen>
 </resources>
