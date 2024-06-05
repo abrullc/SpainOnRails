@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">SpainOnRails</string>
+    <string name="home">Inicio</string>
+    <string name="trains">Trenes</string>
+    <string name="routes">Rutas</string>
+    <string name="stations">Estaciones</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="screen_title">NombrePantalla</string>
+    <string name="login_title">Bienvenido</string>
+    <string name="login_subtitle">Inicia sesión o regístrate</string>
+    <string name="register">Registrarse</string>
+    <string name="start_sesion">Iniciar sesión</string>
+    <string name="hint_username">Nombre de usuario</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="remember_password">Recordar contraseña</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_confirm">Aceptar</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="sp_remember_user">remember_user_control</string>
+    <string name="sp_id_user">id_user</string>
+    <string name="main_error_server">Error en la petición</string>
+    <string name="unknown_error_server">Error desconocido en la petición</string>
+    <string name="login_error">El usuario y/o contraseña introducidos son incorrectos</string>
+    <string name="error_username_empty">El campo del nombre de usuario está vacío</string>
+    <string name="error_password_empty">El campo de la contraseña está vacío</string>
+    <string name="dialog_new_user_title">Nuevo usuario</string>
+    <string name="dialog_register_user">Registrarse</string>
+    <string name="error_required_field">Este campo es obligatorio</string>
+    <string name="helper_text_required">Obligatorio</string>
+    <string name="helper_text_optional">Opcional</string>
 </resources>

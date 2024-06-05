@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/bottom_trains"
+        android:title="@string/trains"
+        android:icon="@drawable/ic_train"/>
+
+    <item
+        android:id="@+id/bottom_routes"
+        android:title="@string/routes"
+        android:icon="@drawable/ic_route"/>
+
+    <item
+        android:id="@+id/bottom_stations"
+        android:title="@string/stations"
+        android:icon="@drawable/ic_station"/>
+</menu>
