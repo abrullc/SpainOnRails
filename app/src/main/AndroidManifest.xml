@@ -15,7 +15,9 @@
         android:theme="@style/Theme.SpainOnRails"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".loginModule.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".mainModule.MainActivity"
             android:exported="true">
@@ -26,9 +28,9 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
             android:value="${maps_api_key}" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
