@@ -2,6 +2,8 @@ package com.abrullc.spainonrails.mainModule
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.databinding.ActivityMainBinding
@@ -10,10 +12,13 @@ import com.abrullc.spainonrails.routesModule.RoutesFragment
 import com.abrullc.spainonrails.stationsModule.StationsFragment
 import com.abrullc.spainonrails.trainsModule.TrainsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var bottonNavigationView: BottomNavigationView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        bottonNavigationView.setOnItemSelectedListener {menuItem ->
+        bottonNavigationView.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.bottom_home -> {
                     replaceFragment(HomeFragment())
@@ -47,6 +52,29 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        mBinding.imgNavigationDrawer.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.drawer_home -> {
+                    replaceFragment(HomeFragment())
+                }
+                R.id.drawer_trains -> {
+                    replaceFragment(TrainsFragment())
+                }
+                R.id.drawer_routes -> {
+                    replaceFragment(RoutesFragment())
+                }
+                R.id.drawer_stations -> {
+                    replaceFragment(StationsFragment())
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -54,6 +82,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initComponents() {
-        bottonNavigationView = findViewById(R.id.bottomNav)
+        bottonNavigationView = mBinding.bottomNav
+        drawerLayout = mBinding.drawerLayout
+        navigationView = mBinding.navDrawer
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }
