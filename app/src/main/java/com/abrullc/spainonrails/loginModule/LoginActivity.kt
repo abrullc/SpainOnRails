@@ -184,7 +184,8 @@ class LoginActivity : AppCompatActivity() {
                             id = 0,
                             username = username,
                             password = password,
-                            email = checkOptionalField(email)
+                            email = checkOptionalField(email),
+                            imagen = null
                         )
 
                         registerUser(usuario)
