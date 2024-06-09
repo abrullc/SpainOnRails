@@ -89,5 +89,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
-        android:background="@color/md_theme_primary80"/>
+        android:background="@color/md_theme_primary80"
+        app:itemTextColor="@color/md_theme_secondaryContainer_highContrast"
+        app:itemIconTint="@color/md_theme_secondaryContainer_highContrast"/>
 </androidx.drawerlayout.widget.DrawerLayout>

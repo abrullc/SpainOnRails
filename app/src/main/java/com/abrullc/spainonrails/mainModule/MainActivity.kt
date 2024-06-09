@@ -16,7 +16,7 @@ import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
-    private lateinit var bottonNavigationView: BottomNavigationView
+    private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
@@ -31,28 +31,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        bottonNavigationView.setOnItemSelectedListener { menuItem ->
-            when(menuItem.itemId) {
-                R.id.bottom_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
-                R.id.bottom_trains -> {
-                    replaceFragment(TrainsFragment())
-                    true
-                }
-                R.id.bottom_routes -> {
-                    replaceFragment(RoutesFragment())
-                    true
-                }
-                R.id.bottom_stations -> {
-                    replaceFragment(StationsFragment())
-                    true
-                }
-                else -> false
-            }
-        }
-
         mBinding.imgNavigationDrawer.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -61,28 +39,59 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.drawer_home -> {
                     replaceFragment(HomeFragment())
+                    bottomNavigationView.menu.findItem(R.id.bottom_home).isChecked = true
                 }
                 R.id.drawer_trains -> {
                     replaceFragment(TrainsFragment())
+                    bottomNavigationView.menu.findItem(R.id.bottom_trains).isChecked = true
                 }
                 R.id.drawer_routes -> {
                     replaceFragment(RoutesFragment())
+                    bottomNavigationView.menu.findItem(R.id.bottom_routes).isChecked = true
                 }
                 R.id.drawer_stations -> {
                     replaceFragment(StationsFragment())
+                    bottomNavigationView.menu.findItem(R.id.bottom_stations).isChecked = true
                 }
             }
+            navigationView.setCheckedItem(menuItem.itemId)
             drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
+
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.bottom_home -> {
+                    replaceFragment(HomeFragment())
+                    navigationView.setCheckedItem(R.id.drawer_home)
+                }
+                R.id.bottom_trains -> {
+                    replaceFragment(TrainsFragment())
+                    navigationView.setCheckedItem(R.id.drawer_trains)
+                }
+                R.id.bottom_routes -> {
+                    replaceFragment(RoutesFragment())
+                    navigationView.setCheckedItem(R.id.drawer_routes)
+                }
+                R.id.bottom_stations -> {
+                    replaceFragment(StationsFragment())
+                    navigationView.setCheckedItem(R.id.drawer_stations)
+                }
+            }
+            menuItem.isChecked = true
             true
         }
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame_container, fragment)
+            .commit()
     }
 
     private fun initComponents() {
-        bottonNavigationView = mBinding.bottomNav
+        bottomNavigationView = mBinding.bottomNav
         drawerLayout = mBinding.drawerLayout
         navigationView = mBinding.navDrawer
     }
