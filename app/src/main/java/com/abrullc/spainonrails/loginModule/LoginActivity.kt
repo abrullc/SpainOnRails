@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.utils.CommonFunctions
-import com.abrullc.spainonrails.common.utils.Constants
 import com.abrullc.spainonrails.databinding.ActivityLoginBinding
 import com.abrullc.spainonrails.mainModule.MainActivity
 import com.abrullc.spainonrails.retrofit.entities.Usuario
@@ -22,8 +21,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLoginBinding
@@ -64,12 +61,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUsuario(loginUsername: String, loginPassword: String) {
         var checked = false
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service = retrofit.create(UsuarioService::class.java)
+        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
 
         lifecycleScope.launch {
             try {
@@ -111,12 +103,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getUsuario(idUsuario: Int) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service = retrofit.create(UsuarioService::class.java)
+        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
 
         lifecycleScope.launch {
             try {
@@ -184,7 +171,8 @@ class LoginActivity : AppCompatActivity() {
                             id = 0,
                             username = username,
                             password = password,
-                            email = checkOptionalField(email)
+                            email = checkOptionalField(email),
+                            imagen = null
                         )
 
                         registerUser(usuario)
@@ -199,12 +187,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun registerUser(usuario: Usuario) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service = retrofit.create(UsuarioService::class.java)
+        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
 
         lifecycleScope.launch {
             try {
