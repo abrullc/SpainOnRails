@@ -30,4 +30,5 @@
     <string name="error_required_field">Este campo es obligatorio</string>
     <string name="helper_text_required">Obligatorio</string>
     <string name="helper_text_optional">Opcional</string>
+    <string name="cardview_train_title">Nombre Tren</string>
 </resources>

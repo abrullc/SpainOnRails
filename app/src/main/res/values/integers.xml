@@ -3,4 +3,5 @@
     <integer name="max_length_username">45</integer>
     <integer name="max_length_password">45</integer>
     <integer name="max_length_email">100</integer>
+    <integer name="cardview_gradient_angle">270</integer>
 </resources>
