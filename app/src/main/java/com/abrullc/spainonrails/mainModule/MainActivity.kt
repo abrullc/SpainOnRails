@@ -36,11 +36,9 @@ class MainActivity : AppCompatActivity() {
 
         commonFunctions = CommonFunctions()
 
-        loadData {
-            initComponents()
-            initListeners()
-            replaceFragment(HomeFragment())
-        }
+        initComponents()
+        initListeners()
+        replaceFragment(HomeFragment())
     }
 
     private fun loadData(onDataLoaded: () -> Unit) {
