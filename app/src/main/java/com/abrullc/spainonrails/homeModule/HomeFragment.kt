@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.databinding.FragmentHomeBinding
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView

@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.databinding.FragmentStationsBinding
-import com.abrullc.spainonrails.databinding.FragmentTrainsBinding
 import com.abrullc.spainonrails.stationsModule.adapters.StationsListAdapter
-import com.google.android.material.search.SearchView.TransitionState
 
 class StationsFragment : Fragment() {
     private lateinit var mBinding: FragmentStationsBinding
