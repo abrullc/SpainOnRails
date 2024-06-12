@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         initComponents()
         initListeners()
-        replaceFragment(HomeFragment())
+        replaceFragment(HomeFragment(), getString(R.string.home))
     }
 
     private fun loadData(onDataLoaded: () -> Unit) {
@@ -131,19 +131,19 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.drawer_home -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(HomeFragment(), getString(R.string.home))
                     bottomNavigationView.menu.findItem(R.id.bottom_home).isChecked = true
                 }
                 R.id.drawer_trains -> {
-                    replaceFragment(TrainsFragment())
+                    replaceFragment(TrainsFragment(), getString(R.string.trains))
                     bottomNavigationView.menu.findItem(R.id.bottom_trains).isChecked = true
                 }
                 R.id.drawer_routes -> {
-                    replaceFragment(RoutesFragment())
+                    replaceFragment(RoutesFragment(), getString(R.string.routes))
                     bottomNavigationView.menu.findItem(R.id.bottom_routes).isChecked = true
                 }
                 R.id.drawer_stations -> {
-                    replaceFragment(StationsFragment())
+                    replaceFragment(StationsFragment(), getString(R.string.stations))
                     bottomNavigationView.menu.findItem(R.id.bottom_stations).isChecked = true
                 }
             }
@@ -155,19 +155,19 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.bottom_home -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(HomeFragment(), getString(R.string.home))
                     navigationView.setCheckedItem(R.id.drawer_home)
                 }
                 R.id.bottom_trains -> {
-                    replaceFragment(TrainsFragment())
+                    replaceFragment(TrainsFragment(), getString(R.string.trains))
                     navigationView.setCheckedItem(R.id.drawer_trains)
                 }
                 R.id.bottom_routes -> {
-                    replaceFragment(RoutesFragment())
+                    replaceFragment(RoutesFragment(), getString(R.string.routes))
                     navigationView.setCheckedItem(R.id.drawer_routes)
                 }
                 R.id.bottom_stations -> {
-                    replaceFragment(StationsFragment())
+                    replaceFragment(StationsFragment(), getString(R.string.stations))
                     navigationView.setCheckedItem(R.id.drawer_stations)
                 }
             }
@@ -176,11 +176,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, title: String) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.frame_container, fragment)
             .commit()
+
+        mBinding.tvScreenTitle.text = title
     }
 
     private fun initComponents() {
