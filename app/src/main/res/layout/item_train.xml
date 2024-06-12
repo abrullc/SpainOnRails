@@ -12,9 +12,9 @@
 
         <ImageView
             android:id="@+id/imgTrain"
-            android:src="@drawable/ic_train"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:contentDescription="@string/img_train_description"/>
 
         <View
             android:layout_width="match_parent"
