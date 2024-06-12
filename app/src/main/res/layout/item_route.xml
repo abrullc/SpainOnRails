@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/common_margin_default">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/cardview_gradient_variant_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/common_margin_default"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/icRoute"
+                android:src="@drawable/ic_route"
+                android:layout_width="@dimen/common_icon_default"
+                android:layout_height="0dp"
+                app:tint="@color/md_theme_secondaryContainer_highContrast"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/icStart"
+                android:src="@drawable/ic_start"
+                android:layout_width="@dimen/common_icon_min"
+                android:layout_height="0dp"
+                app:tint="@color/md_theme_secondaryContainer_highContrast"
+                android:layout_marginStart="@dimen/common_margin_default"
+                app:layout_constraintStart_toEndOf="@id/icRoute"
+                app:layout_constraintTop_toTopOf="@id/tvStart"
+                app:layout_constraintBottom_toBottomOf="@id/tvStart"/>
+
+            <TextView
+                android:id="@+id/tvStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="@string/cardview_route_start"
+                android:textColor="@color/md_theme_secondaryContainer_highContrast"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_marginStart="@dimen/common_margin_min"
+                app:layout_constraintStart_toEndOf="@id/icStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/icDestination"
+                android:src="@drawable/ic_destination"
+                android:layout_width="@dimen/common_icon_min"
+                android:layout_height="0dp"
+                app:tint="@color/md_theme_secondaryContainer_highContrast"
+                android:layout_marginStart="@dimen/common_margin_default"
+                app:layout_constraintStart_toEndOf="@id/icRoute"
+                app:layout_constraintTop_toTopOf="@id/tvDestination"
+                app:layout_constraintBottom_toBottomOf="@id/tvDestination"/>
+
+            <TextView
+                android:id="@+id/tvDestination"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="@string/cardview_route_finish"
+                android:textColor="@color/md_theme_secondaryContainer_highContrast"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_marginTop="@dimen/common_margin_default"
+                android:layout_marginStart="@dimen/common_margin_min"
+                app:layout_constraintStart_toEndOf="@id/icDestination"
+                app:layout_constraintTop_toBottomOf="@id/tvStart"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
