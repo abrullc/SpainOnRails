@@ -50,8 +50,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             val resultPuntoInteres = puntoInteresService.getPuntosInteres()
 
             withContext(Dispatchers.Main) {
-                SpainOnRailsApplication.estaciones = resultEstaciones.body()!!
-
                 val boundsBuilder = LatLngBounds.Builder()
 
                 for (estacion in resultEstaciones.body()!!) {
