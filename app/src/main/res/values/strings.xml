@@ -30,4 +30,10 @@
     <string name="error_required_field">Este campo es obligatorio</string>
     <string name="helper_text_required">Obligatorio</string>
     <string name="helper_text_optional">Opcional</string>
+    <string name="cardview_train_title">Nombre Tren</string>
+    <string name="cardview_station_title">Nombre estación</string>
+    <string name="cardview_station_city">Población estación</string>
+    <string name="hint_search_stations">Buscar estaciones</string>
+    <string name="cardview_route_start">Estación inicio ruta</string>
+    <string name="cardview_route_finish">Estación fin ruta</string>
 </resources>

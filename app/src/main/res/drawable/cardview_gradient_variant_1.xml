@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="@color/md_theme_inverseOnSurface"
+        android:endColor="@color/md_theme_tertiaryContainer"
+        android:angle="@integer/cardview_gradient_variant_1_angle"
+        android:dither="true"
+        />
+</shape>

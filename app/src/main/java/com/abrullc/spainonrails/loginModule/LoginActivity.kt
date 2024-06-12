@@ -118,9 +118,6 @@ class LoginActivity : AppCompatActivity() {
                         etPassword.setText(usuario.password)
                         cbRememberPass.isChecked = true
                     }
-
-                    Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.username}!", Toast.LENGTH_LONG).show()
-                    goToMain()
                 }
             } catch (e: Exception) {
                 (e as? HttpException)?.let {
