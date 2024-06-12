@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.stationsModule
+package com.abrullc.spainonrails.mainModule.stationsModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,7 +13,7 @@ import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentStationsBinding
 import com.abrullc.spainonrails.retrofit.entities.Estacion
 import com.abrullc.spainonrails.retrofit.services.EstacionService
-import com.abrullc.spainonrails.stationsModule.adapters.StationsListAdapter
+import com.abrullc.spainonrails.mainModule.stationsModule.adapters.StationsListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

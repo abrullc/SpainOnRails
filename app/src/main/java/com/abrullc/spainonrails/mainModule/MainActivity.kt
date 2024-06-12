@@ -9,16 +9,16 @@ import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.ActivityMainBinding
-import com.abrullc.spainonrails.homeModule.HomeFragment
+import com.abrullc.spainonrails.mainModule.homeModule.HomeFragment
 import com.abrullc.spainonrails.retrofit.services.EstacionService
 import com.abrullc.spainonrails.retrofit.services.PasajeService
 import com.abrullc.spainonrails.retrofit.services.PlanViajeService
 import com.abrullc.spainonrails.retrofit.services.PuntoInteresService
 import com.abrullc.spainonrails.retrofit.services.RutaService
 import com.abrullc.spainonrails.retrofit.services.TrenService
-import com.abrullc.spainonrails.routesModule.RoutesFragment
-import com.abrullc.spainonrails.stationsModule.StationsFragment
-import com.abrullc.spainonrails.trainsModule.TrainsFragment
+import com.abrullc.spainonrails.mainModule.routesModule.RoutesFragment
+import com.abrullc.spainonrails.mainModule.stationsModule.StationsFragment
+import com.abrullc.spainonrails.mainModule.trainsModule.TrainsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 

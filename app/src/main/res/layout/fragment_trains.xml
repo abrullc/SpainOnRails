@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_marginTop="@dimen/common_margin_default"
     android:layout_marginHorizontal="@dimen/common_margin_default"
-    tools:context=".trainsModule.TrainsFragment">
+    tools:context=".mainModule.trainsModule.TrainsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvTrains"
