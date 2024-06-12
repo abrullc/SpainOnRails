@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginHorizontal="@dimen/common_margin_default"
-    tools:context=".stationsModule.StationsFragment">
+    tools:context=".mainModule.stationsModule.StationsFragment">
 
     <android.widget.SearchView
         android:id="@+id/svStations"

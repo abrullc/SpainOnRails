@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.homeModule
+package com.abrullc.spainonrails.mainModule.homeModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

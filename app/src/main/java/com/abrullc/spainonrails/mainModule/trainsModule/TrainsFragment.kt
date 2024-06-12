@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.trainsModule
+package com.abrullc.spainonrails.mainModule.trainsModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentTrainsBinding
 import com.abrullc.spainonrails.retrofit.services.TrenService
-import com.abrullc.spainonrails.trainsModule.adapters.TrainsListAdapter
+import com.abrullc.spainonrails.mainModule.trainsModule.adapters.TrainsListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

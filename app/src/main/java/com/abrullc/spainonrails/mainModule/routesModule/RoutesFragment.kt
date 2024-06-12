@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.routesModule
+package com.abrullc.spainonrails.mainModule.routesModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentRoutesBinding
 import com.abrullc.spainonrails.retrofit.services.RutaService
-import com.abrullc.spainonrails.routesModule.adapters.RoutesListAdapter
+import com.abrullc.spainonrails.mainModule.routesModule.adapters.RoutesListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.routesModule.adapters
+package com.abrullc.spainonrails.mainModule.routesModule.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
