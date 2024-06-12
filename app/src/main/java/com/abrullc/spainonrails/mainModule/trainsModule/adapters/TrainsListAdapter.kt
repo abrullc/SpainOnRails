@@ -42,7 +42,7 @@ class TrainsListAdapter: ListAdapter<Tren, RecyclerView.ViewHolder>(TrenDiffCall
                 tvTrainName.text = tren.nombre
 
                 Glide.with(context)
-                    .load(imgTrain)
+                    .load(tren.imagen)
                     .placeholder(R.drawable.ic_train)
                     .error(R.drawable.ic_train)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
