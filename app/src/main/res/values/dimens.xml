@@ -11,4 +11,5 @@
     <dimen name="common_icon_default">32dp</dimen>
     <dimen name="ic_train_top_padding">3dp</dimen>
     <dimen name="cardview_station_height">64dp</dimen>
+    <dimen name="common_icon_min">24dp</dimen>
 </resources>
