@@ -29,23 +29,13 @@ class RoutesFragment : Fragment() {
 
         commonFunctions = CommonFunctions()
 
-        getRutaes()
-
-        setupRecyclerView()
-
         return mBinding.root
     }
 
-    private fun getRutaes() {
-        commonFunctions.launchLifeCycleScope({
-            val rutaService = SpainOnRailsApplication.retrofit.create(RutaService::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            val resultRutaes = rutaService.getRutas().body()!!
-
-            withContext(Dispatchers.Main) {
-                mRouteAdapter.submitList(resultRutaes)
-            }
-        }, this, requireContext())
+        setupRecyclerView()
     }
 
     private fun setupRecyclerView() {
@@ -60,5 +50,19 @@ class RoutesFragment : Fragment() {
                 adapter = mRouteAdapter
             }
         }
+
+        getRutaes()
+    }
+
+    private fun getRutaes() {
+        commonFunctions.launchLifeCycleScope({
+            val rutaService = SpainOnRailsApplication.retrofit.create(RutaService::class.java)
+
+            val resultRutaes = rutaService.getRutas().body()!!
+
+            withContext(Dispatchers.Main) {
+                mRouteAdapter.submitList(resultRutaes)
+            }
+        }, this, requireContext())
     }
 }

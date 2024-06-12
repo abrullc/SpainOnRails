@@ -29,23 +29,13 @@ class TrainsFragment : Fragment() {
 
         commonFunctions = CommonFunctions()
 
-        getTrenes()
-
-        setupRecyclerView()
-
         return mBinding.root
     }
 
-    private fun getTrenes() {
-        commonFunctions.launchLifeCycleScope({
-            val trenService = SpainOnRailsApplication.retrofit.create(TrenService::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            val resultTrenes = trenService.getTrenes().body()!!
-
-            withContext(Dispatchers.Main) {
-                mTrainAdapter.submitList(resultTrenes)
-            }
-        }, this, requireContext())
+        setupRecyclerView()
     }
 
     private fun setupRecyclerView() {
@@ -60,5 +50,19 @@ class TrainsFragment : Fragment() {
                 adapter = mTrainAdapter
             }
         }
+
+        getTrenes()
+    }
+
+    private fun getTrenes() {
+        commonFunctions.launchLifeCycleScope({
+            val trenService = SpainOnRailsApplication.retrofit.create(TrenService::class.java)
+
+            val resultTrenes = trenService.getTrenes().body()!!
+
+            withContext(Dispatchers.Main) {
+                mTrainAdapter.submitList(resultTrenes)
+            }
+        }, this, requireContext())
     }
 }

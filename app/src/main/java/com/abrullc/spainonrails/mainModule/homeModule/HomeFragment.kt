@@ -34,11 +34,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         commonFunctions = CommonFunctions()
 
+        return mBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         mapView = mBinding.mapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-
-        return mBinding.root
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

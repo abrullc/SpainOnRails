@@ -32,25 +32,14 @@ class StationsFragment : Fragment() {
 
         commonFunctions = CommonFunctions()
 
-        getEstaciones()
-
-        setupRecyclerView()
-        setupSearchView()
-
         return mBinding.root
     }
 
-    private fun getEstaciones() {
-        commonFunctions.launchLifeCycleScope({
-            val estacionService = SpainOnRailsApplication.retrofit.create(EstacionService::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            val resultEstaciones = estacionService.getEstaciones()
-
-            withContext(Dispatchers.Main) {
-                mStationAdapter.submitList(resultEstaciones.body()!!)
-                listaEstaciones = resultEstaciones.body()!!
-            }
-        }, this, requireContext())
+        setupRecyclerView()
+        setupSearchView()
     }
 
     private fun setupRecyclerView() {
@@ -65,6 +54,21 @@ class StationsFragment : Fragment() {
                 adapter = mStationAdapter
             }
         }
+
+        getEstaciones()
+    }
+
+    private fun getEstaciones() {
+        commonFunctions.launchLifeCycleScope({
+            val estacionService = SpainOnRailsApplication.retrofit.create(EstacionService::class.java)
+
+            val resultEstaciones = estacionService.getEstaciones()
+
+            withContext(Dispatchers.Main) {
+                mStationAdapter.submitList(resultEstaciones.body()!!)
+                listaEstaciones = resultEstaciones.body()!!
+            }
+        }, this, requireContext())
     }
 
     private fun setupSearchView() {
