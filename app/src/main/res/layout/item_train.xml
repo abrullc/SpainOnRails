@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/cardview_train_height"
-    android:layout_margin="@dimen/common_margin_default">
+    android:layout_marginBottom="@dimen/common_margin_default">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
