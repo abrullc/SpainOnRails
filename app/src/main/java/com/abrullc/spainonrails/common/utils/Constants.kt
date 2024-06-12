@@ -21,7 +21,7 @@ object Constants {
     const val PLANES_VIAJE_USUARIO_PATH = "planesViaje/usuario/{id}"
 
     // -- PUNTOS DE INTERÉS
-    const val PUNTOS_INTERES_PATH = "/puntos"
+    const val PUNTOS_INTERES_PATH = "/puntosInteres"
     const val PUNTOS_INTERES_ESTACION_PATH = "/puntosInteres/estacion/{id}"
 
     // -- RUTAS
