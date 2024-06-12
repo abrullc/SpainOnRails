@@ -5,14 +5,60 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.abrullc.spainonrails.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.abrullc.spainonrails.SpainOnRailsApplication
+import com.abrullc.spainonrails.common.utils.CommonFunctions
+import com.abrullc.spainonrails.databinding.FragmentRoutesBinding
+import com.abrullc.spainonrails.retrofit.services.RutaService
+import com.abrullc.spainonrails.routesModule.adapters.RoutesListAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RoutesFragment : Fragment() {
+    private lateinit var mBinding: FragmentRoutesBinding
+    private lateinit var commonFunctions: CommonFunctions
+    private lateinit var mRouteAdapter: RoutesListAdapter
+    private lateinit var mRouteLinearLayoutManager: RecyclerView.LayoutManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_routes, container, false)
+        mBinding = FragmentRoutesBinding.inflate(inflater, container, false)
+
+        commonFunctions = CommonFunctions()
+
+        getRutaes()
+
+        setupRecyclerView()
+
+        return mBinding.root
+    }
+
+    private fun getRutaes() {
+        commonFunctions.launchLifeCycleScope({
+            val rutaService = SpainOnRailsApplication.retrofit.create(RutaService::class.java)
+
+            val resultRutaes = rutaService.getRutas().body()!!
+
+            withContext(Dispatchers.Main) {
+                mRouteAdapter.submitList(resultRutaes)
+            }
+        }, this, requireContext())
+    }
+
+    private fun setupRecyclerView() {
+        mRouteAdapter = RoutesListAdapter()
+
+        mRouteLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+
+        with(mBinding) {
+            rcvRoutes.apply {
+                setHasFixedSize(true)
+                layoutManager = mRouteLinearLayoutManager
+                adapter = mRouteAdapter
+            }
+        }
     }
 }
