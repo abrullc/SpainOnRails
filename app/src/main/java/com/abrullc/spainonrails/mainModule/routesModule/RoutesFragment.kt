@@ -53,10 +53,10 @@ class RoutesFragment : Fragment(), OnClickListener {
             }
         }
 
-        getRutaes()
+        getRutas()
     }
 
-    private fun getRutaes() {
+    private fun getRutas() {
         commonFunctions.launchLifeCycleScope({
             val rutaService = SpainOnRailsApplication.retrofit.create(RutaService::class.java)
 
