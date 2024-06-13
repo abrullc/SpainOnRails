@@ -7,15 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.SpainOnRailsApplication
+import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentTrainsBinding
+import com.abrullc.spainonrails.detailsModule.trainDetailModule.TrainDetailFragment
 import com.abrullc.spainonrails.retrofit.services.TrenService
 import com.abrullc.spainonrails.mainModule.trainsModule.adapters.TrainsListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class TrainsFragment : Fragment() {
+class TrainsFragment : Fragment(), OnClickListener {
     private lateinit var mBinding: FragmentTrainsBinding
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mTrainAdapter: TrainsListAdapter
@@ -39,7 +42,7 @@ class TrainsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        mTrainAdapter = TrainsListAdapter()
+        mTrainAdapter = TrainsListAdapter(this)
 
         mTrainLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
 
@@ -64,5 +67,15 @@ class TrainsFragment : Fragment() {
                 mTrainAdapter.submitList(resultTrenes)
             }
         }, this, requireContext())
+    }
+
+    override fun onClick(entityId: Int) {
+        val fragment = TrainDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("idTren", entityId)
+            }
+        }
+
+        commonFunctions.launchFragmentfromFragment(parentFragmentManager, fragment)
     }
 }

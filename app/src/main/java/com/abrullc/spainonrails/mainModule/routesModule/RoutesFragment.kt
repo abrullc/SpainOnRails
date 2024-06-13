@@ -8,14 +8,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.SpainOnRailsApplication
+import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentRoutesBinding
+import com.abrullc.spainonrails.detailsModule.routeDetailModule.RouteDetailFragment
 import com.abrullc.spainonrails.retrofit.services.RutaService
 import com.abrullc.spainonrails.mainModule.routesModule.adapters.RoutesListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RoutesFragment : Fragment() {
+class RoutesFragment : Fragment(), OnClickListener {
     private lateinit var mBinding: FragmentRoutesBinding
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mRouteAdapter: RoutesListAdapter
@@ -39,7 +41,7 @@ class RoutesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        mRouteAdapter = RoutesListAdapter()
+        mRouteAdapter = RoutesListAdapter(this)
 
         mRouteLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
 
@@ -58,11 +60,21 @@ class RoutesFragment : Fragment() {
         commonFunctions.launchLifeCycleScope({
             val rutaService = SpainOnRailsApplication.retrofit.create(RutaService::class.java)
 
-            val resultRutaes = rutaService.getRutas().body()!!
+            val resultRutas = rutaService.getRutas().body()!!
 
             withContext(Dispatchers.Main) {
-                mRouteAdapter.submitList(resultRutaes)
+                mRouteAdapter.submitList(resultRutas)
             }
         }, this, requireContext())
+    }
+
+    override fun onClick(entityId: Int) {
+        val fragment = RouteDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("idRuta", entityId)
+            }
+        }
+
+        commonFunctions.launchFragmentfromFragment(parentFragmentManager, fragment)
     }
 }
