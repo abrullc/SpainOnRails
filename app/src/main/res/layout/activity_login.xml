@@ -30,14 +30,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_title"
+            android:textColor="@color/md_theme_secondaryContainer_highContrast"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textStyle="italic"
             android:layout_gravity="start"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_subtitle"
+            android:textColor="@color/md_theme_secondaryContainer_highContrast"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="bold"
             android:layout_gravity="start"/>
 
         <com.google.android.material.textfield.TextInputLayout
