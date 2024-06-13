@@ -37,4 +37,8 @@
     <string name="cardview_route_start">Estación inicio ruta</string>
     <string name="cardview_route_finish">Estación fin ruta</string>
     <string name="img_train_description">Imagen del tren</string>
+    <string name="capacity">Capacidad:</string>
+    <string name="capacity_num">00</string>
+    <string name="train_description">Descripción tren</string>
+    <string name="rutas_train_title">Rutas del tren:</string>
 </resources>
