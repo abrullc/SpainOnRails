@@ -3,6 +3,8 @@ package com.abrullc.spainonrails.common.utils
 import android.content.Context
 import android.webkit.URLUtil
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.abrullc.spainonrails.R
@@ -44,5 +46,13 @@ class CommonFunctions {
                 }
             }
         }
+    }
+
+    fun launchFragmentfromFragment(framgentManager: FragmentManager, newFragment: Fragment) {
+        framgentManager
+            .beginTransaction()
+            .replace(R.id.frame_container, newFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
