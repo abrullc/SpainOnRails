@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.detailsModule.trainDetailModule
+package com.abrullc.spainonrails.details.trainDetailModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
