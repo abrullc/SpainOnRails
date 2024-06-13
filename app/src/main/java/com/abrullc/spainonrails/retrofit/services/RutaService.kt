@@ -11,6 +11,9 @@ interface RutaService {
     @GET(Constants.RUTAS_PATH)
     suspend fun getRutas(): Response<MutableList<Ruta>>
 
+    @GET(Constants.RUTA_PATH)
+    suspend fun getRuta(@Path("id") id: Int): Ruta
+
     @GET(Constants.ESTACIONES_RUTA_PATH)
     suspend fun getEstacionesRuta(@Path("id") id: Int): Response<MutableList<Estacion>>
 }
