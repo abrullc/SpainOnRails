@@ -5,4 +5,5 @@ data class Ruta(
     var origen: String,
     var destino: String,
     var descripcion: String,
+    var tren: Tren
 )
