@@ -11,5 +11,5 @@ interface TrenService {
     suspend fun getTrenes(): Response<MutableList<Tren>>
 
     @GET(Constants.TREN_PATH)
-    suspend fun getTren(@Path("id") id: Int): Tren
+    suspend fun getTren(@Path("id") id: Int): Response<Tren>
 }
