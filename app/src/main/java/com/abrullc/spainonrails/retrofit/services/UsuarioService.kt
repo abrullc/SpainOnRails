@@ -15,6 +15,9 @@ interface UsuarioService {
     @GET(Constants.USUARIO_PATH)
     suspend fun getUsuario(@Path("id") id: Int): Response<Usuario>
 
+    @POST(Constants.VALIDATE_USUARIO_PATH)
+    suspend fun validateUsuario(@Body usuario: Usuario): Response<Usuario?>
+
     @POST(Constants.USUARIOS_PATH)
     suspend fun postUsuario(@Body usuario: Usuario): Response<Usuario>
 }
