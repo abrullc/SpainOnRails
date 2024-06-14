@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 
 class TrainDetailFragment : Fragment(), OnClickListener {
     private var idTren: Int = 0
+    private lateinit var tren: Tren
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mBinding: FragmentTrainDetailBinding
     private lateinit var mRouteAdapter: RoutesListAdapter
@@ -61,12 +62,13 @@ class TrainDetailFragment : Fragment(), OnClickListener {
             val resultTren = trenService.getTren(idTren).body()!!
 
             withContext(Dispatchers.Main) {
-                setupTrenInfo(resultTren)
+                tren = resultTren
+                setupTrenInfo()
             }
         }, this, requireContext())
     }
 
-    private fun setupTrenInfo(tren: Tren) {
+    private fun setupTrenInfo() {
         with(mBinding) {
             Glide.with(this@TrainDetailFragment)
                 .load(tren.imagen)
@@ -97,17 +99,17 @@ class TrainDetailFragment : Fragment(), OnClickListener {
             }
         }
 
-        getRutas()
+        getRutasTren()
     }
 
-    private fun getRutas() {
+    private fun getRutasTren() {
         commonFunctions.launchLifeCycleScope({
-            val rutaService = SpainOnRailsApplication.retrofit.create(RutaService::class.java)
+            val trenService = SpainOnRailsApplication.retrofit.create(TrenService::class.java)
 
-            val resultRutas = rutaService.getRutas().body()!!
+            val resultRutasTren = trenService.getRutasTren(tren.id).body()!!
 
             withContext(Dispatchers.Main) {
-                mRouteAdapter.submitList(resultRutas)
+                mRouteAdapter.submitList(resultRutasTren)
             }
         }, this, requireContext())
     }
