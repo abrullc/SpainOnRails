@@ -41,4 +41,8 @@
     <string name="capacity_num">00</string>
     <string name="train_description">Descripción tren</string>
     <string name="rutas_train_title">Rutas del tren:</string>
+    <string name="img_station_description">Imágen de la estación</string>
+    <string name="station_city">Población estación</string>
+    <string name="station_location">Dirección estación</string>
+    <string name="rutas_station_title">Rutas con esta estación:</string>
 </resources>

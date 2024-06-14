@@ -3,7 +3,8 @@
     <dimen name="icon_size">32dp</dimen>
     <dimen name="common_margin_min">8dp</dimen>
     <dimen name="common_margin_default">16dp</dimen>
-    <dimen name="common_padding">16dp</dimen>
+    <dimen name="large_margin">32dp</dimen>
+    <dimen name="common_padding_min">8dp</dimen>
     <dimen name="common_padding_default">16dp</dimen>
     <dimen name="large_padding">32dp</dimen>
     <dimen name="tv_new_user_height">32dp</dimen>
@@ -12,5 +13,7 @@
     <dimen name="ic_train_top_padding">3dp</dimen>
     <dimen name="cardview_station_height">64dp</dimen>
     <dimen name="common_icon_min">24dp</dimen>
-    <dimen name="image_detail_height">256dp</dimen>
+    <dimen name="image_detail_height">220dp</dimen>
+    <dimen name="map_detail_height">256dp</dimen>
+    <dimen name="app_bar_height">100dp</dimen>
 </resources>
