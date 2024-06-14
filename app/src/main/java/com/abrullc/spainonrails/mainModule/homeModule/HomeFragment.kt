@@ -57,7 +57,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 val boundsBuilder = LatLngBounds.Builder()
 
                 for (estacion in resultEstaciones.body()!!) {
-                    val latLng = LatLng(estacion.longitud.toDouble(), estacion.latitud.toDouble())
+                    val latLng = LatLng(estacion.latitud.toDouble(), estacion.longitud.toDouble())
                     boundsBuilder.include(latLng)
                     googleMap.addMarker(
                         MarkerOptions()
@@ -68,7 +68,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 }
 
                 for (puntoInteres in resultPuntoInteres.body()!!) {
-                    val latLng = LatLng(puntoInteres.longitud.toDouble(), puntoInteres.latitud.toDouble())
+                    val latLng = LatLng(puntoInteres.latitud.toDouble(), puntoInteres.longitud.toDouble())
                     boundsBuilder.include(latLng)
                     googleMap.addMarker(
                         MarkerOptions()
