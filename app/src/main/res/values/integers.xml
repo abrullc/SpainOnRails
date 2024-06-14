@@ -5,4 +5,5 @@
     <integer name="max_length_email">100</integer>
     <integer name="cardview_gradient_angle">270</integer>
     <integer name="cardview_gradient_variant_1_angle">180</integer>
+    <integer name="max_length_image">100</integer>
 </resources>

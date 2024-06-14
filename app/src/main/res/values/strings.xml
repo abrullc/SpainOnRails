@@ -45,4 +45,7 @@
     <string name="station_city">Población estación</string>
     <string name="station_location">Dirección estación</string>
     <string name="rutas_station_title">Rutas con esta estación:</string>
+    <string name="hint_image">Foto de perfil</string>
+    <string name="error_url">URL inválida</string>
+    <string name="error_image_url">La URL de la imagen de perfil no es válida</string>
 </resources>
