@@ -101,7 +101,7 @@ class StationDetailFragment : Fragment(), OnMapReadyCallback, OnClickListener {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val latLng = LatLng(estacion.longitud.toDouble(), estacion.latitud.toDouble())
+        val latLng = LatLng(estacion.latitud.toDouble(), estacion.longitud.toDouble())
         googleMap.addMarker(
             MarkerOptions()
                 .position(latLng)
