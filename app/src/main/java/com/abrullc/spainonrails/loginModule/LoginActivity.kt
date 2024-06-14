@@ -14,6 +14,8 @@ import com.abrullc.spainonrails.databinding.ActivityLoginBinding
 import com.abrullc.spainonrails.mainModule.MainActivity
 import com.abrullc.spainonrails.retrofit.entities.Usuario
 import com.abrullc.spainonrails.retrofit.services.UsuarioService
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -31,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        //loadImgPortada("")
+        loadImgPortada("http://spainonrails.navelsystems.es/images/stations/valenciaTermino.jpeg")
 
         commonFunctions = CommonFunctions()
 
@@ -59,33 +61,24 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkUsuario(loginUsername: String, loginPassword: String) {
-        var checked = false
-
         val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
 
         lifecycleScope.launch {
             try {
-                val result = service.getUsuarios()
-                val usuarios = result.body()!!
+                val resultUsuario = service.validateUsuario(usuario = Usuario(
+                    id = 0,
+                    username = loginUsername,
+                    password = loginPassword,
+                    email = null,
+                    imagen = null)).body()
 
-                // si es usuario compruebo que es el mismo que ha hecho login
-                // si es correcto y coincide hago un intent a la activiy de lo fragments
-                withContext(Dispatchers.Main) {
-                    for (usuario in usuarios) {
-                        if (usuario.username == loginUsername && usuario.password == loginPassword) {
-                            SpainOnRailsApplication.usuario = usuario
-
-                            checked = true
-                            spLogin()
-                            Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.username}!", Toast.LENGTH_LONG).show()
-                            goToMain()
-                            break
-                        }
-                    }
-
-                    if (!checked) {
-                        commonFunctions.errorAlertDialog(getString(R.string.login_error), this@LoginActivity)
-                    }
+                if (resultUsuario != null) {
+                    SpainOnRailsApplication.usuario = resultUsuario
+                    spLogin()
+                    Toast.makeText(this@LoginActivity, "Bienvenido ${resultUsuario.username}!", Toast.LENGTH_LONG).show()
+                    goToMain()
+                } else {
+                    commonFunctions.errorAlertDialog(getString(R.string.login_error), this@LoginActivity)
                 }
 
             } catch (e: Exception) {
@@ -162,17 +155,22 @@ class LoginActivity : AppCompatActivity() {
                     val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString().trim()
                     val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
                     val email = dialogView.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
+                    val image = dialogView.findViewById<TextInputEditText>(R.id.etImage).text.toString()
 
                     if (checkUserFields(username, password)) {
-                        usuario = Usuario(
-                            id = 0,
-                            username = username,
-                            password = password,
-                            email = checkOptionalField(email),
-                            imagen = null
-                        )
+                        if (checkImageField(dialogView.findViewById(R.id.etImage))) {
+                            usuario = Usuario(
+                                id = 0,
+                                username = username,
+                                password = password,
+                                email = checkOptionalField(email),
+                                imagen = checkOptionalField(image)
+                            )
 
-                        registerUser(usuario)
+                            registerUser(usuario)
+                        } else {
+                            commonFunctions.errorAlertDialog(getString(R.string.error_image_url), this)
+                        }
                     }
                 })
             .setNegativeButton(R.string.dialog_cancel, null)
@@ -181,6 +179,7 @@ class LoginActivity : AppCompatActivity() {
 
         focusChangeListener(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
         focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
+        focusChangeListenerImage(dialogView.findViewById(R.id.tilImage), dialogView.findViewById(R.id.etImage))
     }
 
     private fun registerUser(usuario: Usuario) {
@@ -189,14 +188,18 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val result = service.postUsuario(usuario)
-                val usuario = result.body()!!
+                val resultNewUsuario = result.body()
 
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@LoginActivity, "Nuevo usuario ${usuario.username} registrado!", Toast.LENGTH_SHORT).show()
+                    if (resultNewUsuario is Usuario) {
+                        Toast.makeText(this@LoginActivity, "Nuevo usuario ${resultNewUsuario.username} registrado!", Toast.LENGTH_SHORT).show()
 
-                    with(mBinding) {
-                        etUsername.setText(usuario.username)
-                        etPassword.setText(usuario.password)
+                        with(mBinding) {
+                            etUsername.setText(usuario.username)
+                            etPassword.setText(usuario.password)
+                        }
+                    } else {
+                        commonFunctions.errorAlertDialog("El usuario con nombre ${usuario.username} ya existe", this@LoginActivity)
                     }
                 }
             } catch (e: Exception) {
@@ -218,13 +221,13 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    /*private fun loadImgPortada(url: String) {
+    private fun loadImgPortada(url: String) {
         Glide.with(this)
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .into(mBinding.imgPortada)
-    }*/
+    }
 
     private fun checkUserFields(username: String, password: String): Boolean {
         if (username.isEmpty()) {
@@ -248,6 +251,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkImageField(imageInput: TextInputEditText): Boolean {
+        return !(imageInput.text.toString().isNotEmpty() && !commonFunctions.validateURL(imageInput.text.toString()))
+    }
+
     private fun focusChangeListener(layout: TextInputLayout, textInput: TextInputEditText) {
         textInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
             var errorStr: String? = null
@@ -255,6 +262,19 @@ class LoginActivity : AppCompatActivity() {
             if (!focused) {
                 if(textInput.text.toString().isEmpty()) {
                     errorStr = getString(R.string.error_required_field)
+                }
+            }
+            layout.error = errorStr
+        }
+    }
+
+    private fun focusChangeListenerImage(layout: TextInputLayout, imageInput: TextInputEditText) {
+        imageInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
+            var errorStr: String? = null
+
+            if (!focused) {
+                if(!checkImageField(imageInput)) {
+                    errorStr = getString(R.string.error_url)
                 }
             }
             layout.error = errorStr
