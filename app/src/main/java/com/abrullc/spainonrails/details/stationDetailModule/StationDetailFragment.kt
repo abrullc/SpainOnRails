@@ -5,18 +5,38 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.SpainOnRailsApplication
+import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentStationDetailBinding
+import com.abrullc.spainonrails.details.routeDetailModule.RouteDetailFragment
+import com.abrullc.spainonrails.mainModule.routesModule.adapters.RoutesListAdapter
 import com.abrullc.spainonrails.retrofit.entities.Estacion
 import com.abrullc.spainonrails.retrofit.services.EstacionService
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class StationDetailFragment : Fragment() {
+class StationDetailFragment : Fragment(), OnMapReadyCallback, OnClickListener {
     private var idEstacion: Int = 0
+    private lateinit var estacion: Estacion
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mBinding: FragmentStationDetailBinding
+    private var savedInstanceState: Bundle? = null
+    private lateinit var mapView: MapView
+    private lateinit var mRouteAdapter: RoutesListAdapter
+    private lateinit var mRouteLinearLayoutManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +60,8 @@ class StationDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        this.savedInstanceState = savedInstanceState
+
         getEstacion()
     }
 
@@ -47,17 +69,86 @@ class StationDetailFragment : Fragment() {
         commonFunctions.launchLifeCycleScope({
             val estacionService = SpainOnRailsApplication.retrofit.create(EstacionService::class.java)
 
-            val resultEstacion = estacionService.getEstacion(idEstacion)
+            val resultEstacion = estacionService.getEstacion(idEstacion).body()!!
 
             withContext(Dispatchers.Main) {
-                setupEstacionInfo(resultEstacion)
+                estacion = resultEstacion
+                setupEstacionInfo()
+
+                mapView = mBinding.mapView
+                mapView.onCreate(savedInstanceState)
+                mapView.getMapAsync(this@StationDetailFragment)
             }
         }, this, requireContext())
     }
 
-    private fun setupEstacionInfo(estacion: Estacion) {
+    private fun setupEstacionInfo() {
         with(mBinding) {
-            tvStationDetailName.text = estacion.nombre
+            Glide.with(this@StationDetailFragment)
+                .load(estacion.imagen)
+                .placeholder(R.drawable.ic_station)
+                .error(R.drawable.ic_station)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .into(imgStation)
+
+            tvStationDetailTitle.text = estacion.nombre
+            tvStationDetailCity.text = estacion.poblacion
+            tvStationDetailLocation.text = estacion.direccion
+
+            setupRecyclerView()
         }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        val latLng = LatLng(estacion.longitud.toDouble(), estacion.latitud.toDouble())
+        googleMap.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title(estacion.nombre)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+        )
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f))
+        googleMap.uiSettings.isScrollGesturesEnabled = false
+        googleMap.uiSettings.isRotateGesturesEnabled = false
+    }
+
+    private fun setupRecyclerView() {
+        mRouteAdapter = RoutesListAdapter(this)
+
+        mRouteLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+
+        with(mBinding) {
+            rcvRoutesStation.apply {
+                setHasFixedSize(false)
+                layoutManager = mRouteLinearLayoutManager
+                adapter = mRouteAdapter
+            }
+        }
+
+        getRutas()
+    }
+
+    private fun getRutas() {
+        commonFunctions.launchLifeCycleScope({
+            val estacionService = SpainOnRailsApplication.retrofit.create(EstacionService::class.java)
+
+            val resultRutasEstacion = estacionService.getRutasEstacion(estacion.id).body()!!
+
+            withContext(Dispatchers.Main) {
+                mRouteAdapter.submitList(resultRutasEstacion)
+            }
+        }, this, requireContext())
+    }
+
+    override fun onClick(entityId: Int) {
+        val fragment = RouteDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("idRuta", entityId)
+            }
+        }
+
+        commonFunctions.launchFragmentfromFragment(parentFragmentManager, fragment)
     }
 }
