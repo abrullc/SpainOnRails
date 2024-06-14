@@ -58,7 +58,7 @@ class TrainDetailFragment : Fragment(), OnClickListener {
         commonFunctions.launchLifeCycleScope({
             val trenService = SpainOnRailsApplication.retrofit.create(TrenService::class.java)
 
-            val resultTren = trenService.getTren(idTren)
+            val resultTren = trenService.getTren(idTren).body()!!
 
             withContext(Dispatchers.Main) {
                 setupTrenInfo(resultTren)
@@ -108,29 +108,8 @@ class TrainDetailFragment : Fragment(), OnClickListener {
 
             withContext(Dispatchers.Main) {
                 mRouteAdapter.submitList(resultRutas)
-
-                /*val totalHeight = measureRecyclerViewHeight(mBinding.rcvRoutesTrain)
-                mBinding.rcvRoutesTrain.layoutParams.height = totalHeight
-                mBinding.rcvRoutesTrain.requestLayout()*/
             }
         }, this, requireContext())
-    }
-
-    private fun measureRecyclerViewHeight(recyclerView: RecyclerView): Int {
-        val adapter = recyclerView.adapter ?: return 0
-        var totalHeight = 0
-
-        for (i in 0 until adapter.itemCount) {
-            val viewHolder = adapter.createViewHolder(recyclerView, adapter.getItemViewType(i))
-            adapter.bindViewHolder(viewHolder, i)
-            viewHolder.itemView.measure(
-                View.MeasureSpec.makeMeasureSpec(recyclerView.width, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.UNSPECIFIED
-            )
-            totalHeight += viewHolder.itemView.measuredHeight
-        }
-
-        return totalHeight
     }
 
     override fun onClick(entityId: Int) {

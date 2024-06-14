@@ -47,7 +47,7 @@ class RouteDetailFragment : Fragment() {
         commonFunctions.launchLifeCycleScope({
             val rutaService = SpainOnRailsApplication.retrofit.create(RutaService::class.java)
 
-            val resultRuta = rutaService.getRuta(idRuta)
+            val resultRuta = rutaService.getRuta(idRuta).body()!!
 
             withContext(Dispatchers.Main) {
                 setupRutaInfo(resultRuta)
