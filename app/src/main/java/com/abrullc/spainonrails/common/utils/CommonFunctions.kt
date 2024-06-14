@@ -14,7 +14,7 @@ import retrofit2.HttpException
 
 class CommonFunctions {
     fun validateURL(url: String): Boolean {
-        return !(!URLUtil.isValidUrl(url.trim()) && url.trim().isNotEmpty())
+        return URLUtil.isValidUrl(url.trim())
     }
 
     fun errorAlertDialog(texto: String, context: Context) {
