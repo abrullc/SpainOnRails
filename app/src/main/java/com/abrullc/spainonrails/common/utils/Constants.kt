@@ -7,6 +7,7 @@ object Constants {
     // -- USUARIOS
     const val USUARIOS_PATH = "/usuarios"
     const val USUARIO_PATH = "/usuario/{id}"
+    const val VALIDATE_USUARIO_PATH = "/usuario/validate"
 
     // -- ESTACIONES
     const val ESTACIONES_PATH = "/estaciones"
@@ -34,4 +35,5 @@ object Constants {
     // -- TRENES
     const val TRENES_PATH = "/trenes"
     const val TREN_PATH = "/tren/{id}"
+    const val RUTAS_TREN_PATH = "tren/{id}/rutas"
 }
