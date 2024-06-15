@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.R
+import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.databinding.ItemStationBinding
 import com.abrullc.spainonrails.retrofit.entities.Estacion
 
-class StationsListAdapter: ListAdapter<Estacion, RecyclerView.ViewHolder>(EstacionDiffCallback()) {
+class StationsListAdapter(private var listener: OnClickListener): ListAdapter<Estacion, RecyclerView.ViewHolder>(EstacionDiffCallback()) {
     private lateinit var context: Context
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemStationBinding.bind(view)
 
         fun setListener(estacion: Estacion) {
-            binding.root.setOnClickListener { TODO("Listener todavía por implementar") }
+            binding.root.setOnClickListener { listener.onClick(estacion.id) }
         }
     }
 

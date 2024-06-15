@@ -66,4 +66,24 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_padding_default"
+        app:counterEnabled="true"
+        android:hint="@string/hint_image"
+        app:helperText="@string/helper_text_optional"
+        app:counterMaxLength="@integer/max_length_image"
+        app:endIconMode="clear_text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="@integer/max_length_image"
+            android:inputType="textUri" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

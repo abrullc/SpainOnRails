@@ -5,8 +5,8 @@ data class PuntoInteres(
     var nombre: String,
     var direccion: String,
     var descripcion: String,
-    var longitud: Float,
     var latitud: Float,
+    var longitud: Float,
     var imagen: String?,
     val estacion: Estacion
 )

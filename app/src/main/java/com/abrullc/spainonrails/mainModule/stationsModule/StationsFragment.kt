@@ -9,15 +9,17 @@ import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.SpainOnRailsApplication
+import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentStationsBinding
+import com.abrullc.spainonrails.details.stationDetailModule.StationDetailFragment
 import com.abrullc.spainonrails.retrofit.entities.Estacion
 import com.abrullc.spainonrails.retrofit.services.EstacionService
 import com.abrullc.spainonrails.mainModule.stationsModule.adapters.StationsListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class StationsFragment : Fragment() {
+class StationsFragment : Fragment(), OnClickListener {
     private lateinit var mBinding: FragmentStationsBinding
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mStationAdapter: StationsListAdapter
@@ -32,12 +34,30 @@ class StationsFragment : Fragment() {
 
         commonFunctions = CommonFunctions()
 
-        getEstaciones()
+        return mBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
         setupSearchView()
+    }
 
-        return mBinding.root
+    private fun setupRecyclerView() {
+        mStationAdapter = StationsListAdapter(this)
+
+        mStationLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+
+        with(mBinding) {
+            rcvStations.apply {
+                setHasFixedSize(true)
+                layoutManager = mStationLinearLayoutManager
+                adapter = mStationAdapter
+            }
+        }
+
+        getEstaciones()
     }
 
     private fun getEstaciones() {
@@ -51,20 +71,6 @@ class StationsFragment : Fragment() {
                 listaEstaciones = resultEstaciones.body()!!
             }
         }, this, requireContext())
-    }
-
-    private fun setupRecyclerView() {
-        mStationAdapter = StationsListAdapter()
-
-        mStationLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-
-        with(mBinding) {
-            rcvStations.apply {
-                setHasFixedSize(true)
-                layoutManager = mStationLinearLayoutManager
-                adapter = mStationAdapter
-            }
-        }
     }
 
     private fun setupSearchView() {
@@ -88,5 +94,15 @@ class StationsFragment : Fragment() {
         }
 
         mStationAdapter.submitList(filteredStations)
+    }
+
+    override fun onClick(entityId: Int) {
+        val fragment = StationDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("idEstacion", entityId)
+            }
+        }
+
+        commonFunctions.launchFragmentfromFragment(parentFragmentManager, fragment)
     }
 }

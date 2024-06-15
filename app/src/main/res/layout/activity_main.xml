@@ -15,14 +15,14 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/app_bar_height"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@color/md_theme_primary80">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/common_padding"
+                android:paddingBottom="@dimen/common_padding_default"
                 android:paddingHorizontal="@dimen/large_padding"
                 >
 
@@ -48,8 +48,8 @@
 
                 <ImageView
                     android:id="@+id/imgProfile"
-                    android:layout_width="@dimen/large_padding"
-                    android:layout_height="@dimen/large_padding"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
                     android:src="@drawable/ic_profile"
                     app:tint="@color/md_theme_secondaryContainer_highContrast"
                     app:layout_constraintEnd_toEndOf="parent"

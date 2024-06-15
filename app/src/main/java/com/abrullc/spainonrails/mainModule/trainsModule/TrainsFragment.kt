@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.SpainOnRailsApplication
+import com.abrullc.spainonrails.common.interfaces.OnClickListener
+import com.abrullc.spainonrails.common.interfaces.OnTrainClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentTrainsBinding
+import com.abrullc.spainonrails.details.trainDetailModule.TrainDetailFragment
 import com.abrullc.spainonrails.retrofit.services.TrenService
 import com.abrullc.spainonrails.mainModule.trainsModule.adapters.TrainsListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class TrainsFragment : Fragment() {
+class TrainsFragment : Fragment(), OnTrainClickListener {
     private lateinit var mBinding: FragmentTrainsBinding
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mTrainAdapter: TrainsListAdapter
@@ -29,11 +32,29 @@ class TrainsFragment : Fragment() {
 
         commonFunctions = CommonFunctions()
 
-        getTrenes()
+        return mBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+    }
 
-        return mBinding.root
+    private fun setupRecyclerView() {
+        mTrainAdapter = TrainsListAdapter(this)
+
+        mTrainLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+
+        with(mBinding) {
+            rcvTrains.apply {
+                setHasFixedSize(true)
+                layoutManager = mTrainLinearLayoutManager
+                adapter = mTrainAdapter
+            }
+        }
+
+        getTrenes()
     }
 
     private fun getTrenes() {
@@ -48,17 +69,13 @@ class TrainsFragment : Fragment() {
         }, this, requireContext())
     }
 
-    private fun setupRecyclerView() {
-        mTrainAdapter = TrainsListAdapter()
-
-        mTrainLinearLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-
-        with(mBinding) {
-            rcvTrains.apply {
-                setHasFixedSize(true)
-                layoutManager = mTrainLinearLayoutManager
-                adapter = mTrainAdapter
+    override fun onTrainClick(trainId: Int) {
+        val fragment = TrainDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("idTren", trainId)
             }
         }
+
+        commonFunctions.launchFragmentfromFragment(parentFragmentManager, fragment)
     }
 }

@@ -34,11 +34,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         commonFunctions = CommonFunctions()
 
+        return mBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         mapView = mBinding.mapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-
-        return mBinding.root
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -53,7 +57,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 val boundsBuilder = LatLngBounds.Builder()
 
                 for (estacion in resultEstaciones.body()!!) {
-                    val latLng = LatLng(estacion.longitud.toDouble(), estacion.latitud.toDouble())
+                    val latLng = LatLng(estacion.latitud.toDouble(), estacion.longitud.toDouble())
                     boundsBuilder.include(latLng)
                     googleMap.addMarker(
                         MarkerOptions()
@@ -64,7 +68,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 }
 
                 for (puntoInteres in resultPuntoInteres.body()!!) {
-                    val latLng = LatLng(puntoInteres.longitud.toDouble(), puntoInteres.latitud.toDouble())
+                    val latLng = LatLng(puntoInteres.latitud.toDouble(), puntoInteres.longitud.toDouble())
                     boundsBuilder.include(latLng)
                     googleMap.addMarker(
                         MarkerOptions()

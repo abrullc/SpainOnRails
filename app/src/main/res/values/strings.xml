@@ -35,6 +35,24 @@
     <string name="cardview_station_city">Población estación</string>
     <string name="hint_search_stations">Buscar estaciones</string>
     <string name="cardview_route_start">Estación inicio ruta</string>
-    <string name="cardview_route_finish">Estación fin ruta</string>
+    <string name="cardview_route_end">Estación fin ruta</string>
     <string name="img_train_description">Imagen del tren</string>
+    <string name="capacity">Capacidad:</string>
+    <string name="capacity_num">00</string>
+    <string name="train_description">Descripción tren</string>
+    <string name="rutas_train_title">Rutas del tren:</string>
+    <string name="img_station_description">Imágen de la estación</string>
+    <string name="station_city">Población estación</string>
+    <string name="station_location">Dirección estación</string>
+    <string name="rutas_station_title">Rutas con esta estación:</string>
+    <string name="hint_image">Foto de perfil</string>
+    <string name="error_url">URL inválida</string>
+    <string name="error_image_url">La URL de la imagen de perfil no es válida</string>
+    <string name="error_existent_username">Nombre en uso</string>
+    <string name="error_errors_in_fields">Revisa los campos con errores</string>
+    <string name="error_required_username">El campo del nombre de usuario es obligatorio</string>
+    <string name="error_required_password">El campo de la contraseña es obligatorio</string>
+    <string name="route_description">Descripción de la ruta</string>
+    <string name="estaciones_ruta_title">Estaciones de la ruta:</string>
+    <string name="trenes_ruta_title">Trenes de la ruta:</string>
 </resources>
