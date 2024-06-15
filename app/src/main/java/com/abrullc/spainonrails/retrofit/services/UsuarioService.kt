@@ -6,6 +6,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface UsuarioService {
@@ -23,4 +24,7 @@ interface UsuarioService {
 
     @POST(Constants.USUARIOS_PATH)
     suspend fun postUsuario(@Body usuario: Usuario): Response<Usuario>
+
+    @PUT(Constants.UPDATE_USUARIO_PATH)
+    suspend fun updateUsuario(@Path("id") id: Int, @Body usuario: Usuario): Response<Usuario>
 }
