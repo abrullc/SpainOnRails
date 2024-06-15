@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.SpainOnRailsApplication
-import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.interfaces.OnTrainClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentTrainsBinding
-import com.abrullc.spainonrails.details.trainDetailModule.TrainDetailFragment
+import com.abrullc.spainonrails.mainModule.details.trainDetailModule.TrainDetailFragment
 import com.abrullc.spainonrails.retrofit.services.TrenService
 import com.abrullc.spainonrails.mainModule.trainsModule.adapters.TrainsListAdapter
 import kotlinx.coroutines.Dispatchers
