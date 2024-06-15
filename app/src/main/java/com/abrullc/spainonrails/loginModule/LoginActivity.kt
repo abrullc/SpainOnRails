@@ -1,12 +1,11 @@
 package com.abrullc.spainonrails.loginModule
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.utils.CommonFunctions
@@ -20,9 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLoginBinding
@@ -61,69 +58,44 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkUsuario(loginUsername: String, loginPassword: String) {
-        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
+        commonFunctions.launchLifeCycleScope({
+            val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
 
-        lifecycleScope.launch {
-            try {
-                val resultUsuario = service.validateUsuario(usuario = Usuario(
-                    id = 0,
-                    username = loginUsername,
-                    password = loginPassword,
-                    email = null,
-                    imagen = null)).body()
+            val resultUsuario = service.validateUsuario(usuario = Usuario(
+                id = 0,
+                username = loginUsername,
+                password = loginPassword,
+                email = null,
+                imagen = null)).body()
 
-                if (resultUsuario != null) {
-                    SpainOnRailsApplication.usuario = resultUsuario
-                    spLogin()
-                    Toast.makeText(this@LoginActivity, "Bienvenido ${resultUsuario.username}!", Toast.LENGTH_LONG).show()
-                    goToMain()
-                } else {
-                    commonFunctions.errorAlertDialog(getString(R.string.login_error), this@LoginActivity)
-                }
-
-            } catch (e: Exception) {
-                (e as? HttpException)?.let {
-                    when(it.code()) {
-                        400 -> {
-                            Toast.makeText(this@LoginActivity, R.string.main_error_server, Toast.LENGTH_SHORT).show()
-                        }
-                        else ->
-                            Toast.makeText(this@LoginActivity, R.string.unknown_error_server, Toast.LENGTH_SHORT).show()
-                    }
-                }
+            if (resultUsuario != null) {
+                SpainOnRailsApplication.usuario = resultUsuario
+                spLogin()
+                Toast.makeText(this@LoginActivity, "Bienvenido ${resultUsuario.username}!", Toast.LENGTH_LONG).show()
+                goToMain()
+            } else {
+                commonFunctions.errorAlertDialog(getString(R.string.login_error), this@LoginActivity)
             }
-        }
+        }, this, this)
     }
 
     private fun getUsuario(idUsuario: Int) {
-        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
+        commonFunctions.launchLifeCycleScope({
+            val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
 
-        lifecycleScope.launch {
-            try {
-                val result = service.getUsuario(idUsuario)
-                val usuario = result.body()!!
+            val result = service.getUsuario(idUsuario)
+            val usuario = result.body()!!
 
-                withContext(Dispatchers.Main) {
-                    SpainOnRailsApplication.usuario = usuario
+            withContext(Dispatchers.Main) {
+                SpainOnRailsApplication.usuario = usuario
 
-                    with(mBinding) {
-                        etUsername.setText(usuario.username)
-                        etPassword.setText(usuario.password)
-                        cbRememberPass.isChecked = true
-                    }
-                }
-            } catch (e: Exception) {
-                (e as? HttpException)?.let {
-                    when(it.code()) {
-                        400 -> {
-                            Toast.makeText(this@LoginActivity, R.string.main_error_server, Toast.LENGTH_SHORT).show()
-                        }
-                        else ->
-                            Toast.makeText(this@LoginActivity, R.string.unknown_error_server, Toast.LENGTH_SHORT).show()
-                    }
+                with(mBinding) {
+                    etUsername.setText(usuario.username)
+                    etPassword.setText(usuario.password)
+                    cbRememberPass.isChecked = true
                 }
             }
-        }
+        }, this, this)
     }
 
     private fun spLogin() {
@@ -145,21 +117,32 @@ class LoginActivity : AppCompatActivity() {
 
     private fun createUser() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
-        lateinit var usuario: Usuario
 
-        MaterialAlertDialogBuilder(this)
+        val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.dialog_new_user_title)
             .setView(dialogView)
-            .setPositiveButton(R.string.dialog_register_user,
-                DialogInterface.OnClickListener { _, _ ->
-                    val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString().trim()
-                    val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
-                    val email = dialogView.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
-                    val image = dialogView.findViewById<TextInputEditText>(R.id.etImage).text.toString()
+            .setPositiveButton(R.string.dialog_register_user, null)
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .setCancelable(false)
+            .create()
 
-                    if (checkUserFields(username, password)) {
-                        if (checkImageField(dialogView.findViewById(R.id.etImage))) {
-                            usuario = Usuario(
+        dialog.show()
+
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positiveButton.setOnClickListener {
+            val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString().trim()
+            val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
+            val email = dialogView.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
+            val image = dialogView.findViewById<TextInputEditText>(R.id.etImage).text.toString().trim()
+
+            if (validateFields(username, password, image)) {
+                commonFunctions.launchLifeCycleScope({
+                    val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
+                    val resultUsuario = service.validateNewUsuario(username).body()
+
+                    withContext(Dispatchers.Main) {
+                        if (resultUsuario == null) {
+                            val usuario = Usuario(
                                 id = 0,
                                 username = username,
                                 password = password,
@@ -168,52 +151,40 @@ class LoginActivity : AppCompatActivity() {
                             )
 
                             registerUser(usuario)
+
+                            dialog.dismiss()
                         } else {
-                            commonFunctions.errorAlertDialog(getString(R.string.error_image_url), this)
+                            commonFunctions.errorAlertDialog(getString(R.string.error_existent_username), this@LoginActivity)
                         }
                     }
-                })
-            .setNegativeButton(R.string.dialog_cancel, null)
-            .setCancelable(true)
-            .show()
+                }, this, this)
+            }
+        }
 
-        focusChangeListener(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
+        usernameChecker(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
         focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
         focusChangeListenerImage(dialogView.findViewById(R.id.tilImage), dialogView.findViewById(R.id.etImage))
     }
 
     private fun registerUser(usuario: Usuario) {
-        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
+        commonFunctions.launchLifeCycleScope({
+            val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
 
-        lifecycleScope.launch {
-            try {
-                val result = service.postUsuario(usuario)
-                val resultNewUsuario = result.body()
+            val resultUsuario = service.postUsuario(usuario).body()!!
 
-                withContext(Dispatchers.Main) {
-                    if (resultNewUsuario is Usuario) {
-                        Toast.makeText(this@LoginActivity, "Nuevo usuario ${resultNewUsuario.username} registrado!", Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Nuevo usuario ${resultUsuario.username} registrado!",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                        with(mBinding) {
-                            etUsername.setText(usuario.username)
-                            etPassword.setText(usuario.password)
-                        }
-                    } else {
-                        commonFunctions.errorAlertDialog("El usuario con nombre ${usuario.username} ya existe", this@LoginActivity)
-                    }
-                }
-            } catch (e: Exception) {
-                (e as? HttpException)?.let {
-                    when (it.code()) {
-                        400 -> {
-                            Toast.makeText(this@LoginActivity, R.string.main_error_server, Toast.LENGTH_SHORT).show()
-                        }
-                        else ->
-                            Toast.makeText(this@LoginActivity, R.string.unknown_error_server, Toast.LENGTH_SHORT).show()
-                    }
+                with(mBinding) {
+                    etUsername.setText(usuario.username)
+                    etPassword.setText(usuario.password)
                 }
             }
-        }
+        }, this, this)
     }
 
     private fun goToMain() {
@@ -227,6 +198,25 @@ class LoginActivity : AppCompatActivity() {
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .into(mBinding.imgPortada)
+    }
+
+    private fun validateFields(username: String, password: String, image: String): Boolean {
+        if (username.isEmpty()) {
+            commonFunctions.errorAlertDialog(getString(R.string.error_required_username), this)
+            return false
+        }
+
+        if (password.isEmpty()) {
+            commonFunctions.errorAlertDialog(getString(R.string.error_required_password), this)
+            return false
+        }
+
+        if (image.isNotEmpty() && !commonFunctions.validateURL(image)) {
+            commonFunctions.errorAlertDialog(getString(R.string.error_url), this)
+            return false
+        }
+
+        return true
     }
 
     private fun checkUserFields(username: String, password: String): Boolean {
@@ -251,10 +241,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkImageField(imageInput: TextInputEditText): Boolean {
-        return !(imageInput.text.toString().isNotEmpty() && !commonFunctions.validateURL(imageInput.text.toString()))
-    }
-
     private fun focusChangeListener(layout: TextInputLayout, textInput: TextInputEditText) {
         textInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
             var errorStr: String? = null
@@ -264,8 +250,43 @@ class LoginActivity : AppCompatActivity() {
                     errorStr = getString(R.string.error_required_field)
                 }
             }
+
             layout.error = errorStr
         }
+    }
+
+    private fun usernameChecker(layout: TextInputLayout, textInput: TextInputEditText) {
+        textInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
+            var errorStr: String? = null
+
+            val username = textInput.text.toString()
+
+            if (!focused) {
+                if (username.isEmpty()) {
+                    errorStr = getString(R.string.error_required_field)
+                    layout.error = errorStr
+                } else {
+                    commonFunctions.launchLifeCycleScope({
+                        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
+
+                        val resultUsuario = service.validateNewUsuario(username).body()
+
+                        withContext(Dispatchers.Main) {
+                            if (resultUsuario != null) {
+                                errorStr = getString(R.string.error_existent_username)
+                            }
+                            layout.error = errorStr
+                        }
+                    }, this, this)
+                }
+            } else {
+                layout.error = null
+            }
+        }
+    }
+
+    private fun checkImageField(imageInput: TextInputEditText): Boolean {
+        return !(imageInput.text.toString().isNotEmpty() && !commonFunctions.validateURL(imageInput.text.toString()))
     }
 
     private fun focusChangeListenerImage(layout: TextInputLayout, imageInput: TextInputEditText) {
@@ -277,6 +298,7 @@ class LoginActivity : AppCompatActivity() {
                     errorStr = getString(R.string.error_url)
                 }
             }
+
             layout.error = errorStr
         }
     }
