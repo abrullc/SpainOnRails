@@ -26,6 +26,15 @@ class CommonFunctions {
             .show()
     }
 
+    fun infoAlertDialog(texto: String, context: Context) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.dialog_info_title)
+            .setMessage(texto)
+            .setPositiveButton(R.string.dialog_confirm, null)
+            .setCancelable(false)
+            .show()
+    }
+
     fun launchLifeCycleScope(
         code: suspend () -> Unit,
         lifecycleOwner: LifecycleOwner,
