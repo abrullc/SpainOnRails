@@ -2,13 +2,13 @@ package com.abrullc.spainonrails.loginModule
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.utils.CommonFunctions
+import com.abrullc.spainonrails.common.utils.CommonUserFunctions
 import com.abrullc.spainonrails.databinding.ActivityLoginBinding
 import com.abrullc.spainonrails.mainModule.MainActivity
 import com.abrullc.spainonrails.retrofit.entities.Usuario
@@ -17,13 +17,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLoginBinding
     private lateinit var commonFunctions: CommonFunctions
+    private lateinit var commonUserFunctions: CommonUserFunctions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         loadImgPortada("http://spainonrails.navelsystems.es/images/stations/valenciaTermino.jpeg")
 
         commonFunctions = CommonFunctions()
+        commonUserFunctions = CommonUserFunctions(this, this, false)
 
         val preferences = getPreferences(MODE_PRIVATE)
 
@@ -47,13 +48,26 @@ class LoginActivity : AppCompatActivity() {
             val username = mBinding.etUsername.text.toString().trim()
             val password = mBinding.etPassword.text.toString().trim()
 
-            checkUserFields(username, password)
+            commonUserFunctions.checkUserFields(username, password)
 
             checkUsuario(username, password)
         }
 
         mBinding.newUser.setOnClickListener {
             createUser()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (SpainOnRailsApplication.isUsuarioUpdated) {
+            with(mBinding) {
+                etUsername.setText(SpainOnRailsApplication.usuario.username)
+                etPassword.setText(SpainOnRailsApplication.usuario.password)
+            }
+
+            SpainOnRailsApplication.isUsuarioUpdated = false
         }
     }
 
@@ -87,8 +101,6 @@ class LoginActivity : AppCompatActivity() {
             val usuario = result.body()!!
 
             withContext(Dispatchers.Main) {
-                SpainOnRailsApplication.usuario = usuario
-
                 with(mBinding) {
                     etUsername.setText(usuario.username)
                     etPassword.setText(usuario.password)
@@ -135,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
             val email = dialogView.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
             val image = dialogView.findViewById<TextInputEditText>(R.id.etImage).text.toString().trim()
 
-            if (validateFields(username, password, image)) {
+            if (commonUserFunctions.validateFields(username, password, image)) {
                 commonFunctions.launchLifeCycleScope({
                     val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
                     val resultUsuario = service.validateNewUsuario(username).body()
@@ -146,8 +158,8 @@ class LoginActivity : AppCompatActivity() {
                                 id = 0,
                                 username = username,
                                 password = password,
-                                email = checkOptionalField(email),
-                                imagen = checkOptionalField(image)
+                                email = commonUserFunctions.checkOptionalField(email),
+                                imagen = commonUserFunctions.checkOptionalField(image)
                             )
 
                             registerUser(usuario)
@@ -161,9 +173,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        usernameChecker(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
-        focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
-        focusChangeListenerImage(dialogView.findViewById(R.id.tilImage), dialogView.findViewById(R.id.etImage))
+        commonUserFunctions.usernameChecker(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
+        commonUserFunctions.focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
+        commonUserFunctions.focusChangeListenerImage(dialogView.findViewById(R.id.tilImage), dialogView.findViewById(R.id.etImage))
     }
 
     private fun registerUser(usuario: Usuario) {
@@ -198,108 +210,5 @@ class LoginActivity : AppCompatActivity() {
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .into(mBinding.imgPortada)
-    }
-
-    private fun validateFields(username: String, password: String, image: String): Boolean {
-        if (username.isEmpty()) {
-            commonFunctions.errorAlertDialog(getString(R.string.error_required_username), this)
-            return false
-        }
-
-        if (password.isEmpty()) {
-            commonFunctions.errorAlertDialog(getString(R.string.error_required_password), this)
-            return false
-        }
-
-        if (image.isNotEmpty() && !commonFunctions.validateURL(image)) {
-            commonFunctions.errorAlertDialog(getString(R.string.error_url), this)
-            return false
-        }
-
-        return true
-    }
-
-    private fun checkUserFields(username: String, password: String): Boolean {
-        if (username.isEmpty()) {
-            commonFunctions.errorAlertDialog(getString(R.string.error_username_empty), this)
-            return false
-        }
-
-        if (password.isEmpty()) {
-            commonFunctions.errorAlertDialog(getString(R.string.error_password_empty), this)
-            return false
-        }
-
-        return true
-    }
-
-    private fun checkOptionalField(field: String): String? {
-        if (field.isEmpty()) {
-            return null
-        } else {
-            return field
-        }
-    }
-
-    private fun focusChangeListener(layout: TextInputLayout, textInput: TextInputEditText) {
-        textInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
-            var errorStr: String? = null
-
-            if (!focused) {
-                if(textInput.text.toString().isEmpty()) {
-                    errorStr = getString(R.string.error_required_field)
-                }
-            }
-
-            layout.error = errorStr
-        }
-    }
-
-    private fun usernameChecker(layout: TextInputLayout, textInput: TextInputEditText) {
-        textInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
-            var errorStr: String? = null
-
-            val username = textInput.text.toString()
-
-            if (!focused) {
-                if (username.isEmpty()) {
-                    errorStr = getString(R.string.error_required_field)
-                    layout.error = errorStr
-                } else {
-                    commonFunctions.launchLifeCycleScope({
-                        val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
-
-                        val resultUsuario = service.validateNewUsuario(username).body()
-
-                        withContext(Dispatchers.Main) {
-                            if (resultUsuario != null) {
-                                errorStr = getString(R.string.error_existent_username)
-                            }
-                            layout.error = errorStr
-                        }
-                    }, this, this)
-                }
-            } else {
-                layout.error = null
-            }
-        }
-    }
-
-    private fun checkImageField(imageInput: TextInputEditText): Boolean {
-        return !(imageInput.text.toString().isNotEmpty() && !commonFunctions.validateURL(imageInput.text.toString()))
-    }
-
-    private fun focusChangeListenerImage(layout: TextInputLayout, imageInput: TextInputEditText) {
-        imageInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
-            var errorStr: String? = null
-
-            if (!focused) {
-                if(!checkImageField(imageInput)) {
-                    errorStr = getString(R.string.error_url)
-                }
-            }
-
-            layout.error = errorStr
-        }
     }
 }
