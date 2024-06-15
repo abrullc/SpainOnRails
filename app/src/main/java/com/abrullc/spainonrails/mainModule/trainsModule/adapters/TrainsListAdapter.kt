@@ -9,19 +9,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.common.interfaces.OnClickListener
+import com.abrullc.spainonrails.common.interfaces.OnTrainClickListener
 import com.abrullc.spainonrails.databinding.ItemTrainBinding
 import com.abrullc.spainonrails.retrofit.entities.Tren
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-class TrainsListAdapter(private var listener: OnClickListener): ListAdapter<Tren, RecyclerView.ViewHolder>(TrenDiffCallback()) {
+class TrainsListAdapter(private var listener: OnTrainClickListener): ListAdapter<Tren, RecyclerView.ViewHolder>(TrenDiffCallback()) {
     private lateinit var context: Context
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemTrainBinding.bind(view)
 
         fun setListener(tren: Tren) {
-            binding.root.setOnClickListener { listener.onClick(tren.id) }
+            binding.root.setOnClickListener { listener.onTrainClick(tren.id) }
         }
     }
 

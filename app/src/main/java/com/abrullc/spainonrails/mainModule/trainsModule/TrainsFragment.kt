@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.interfaces.OnClickListener
+import com.abrullc.spainonrails.common.interfaces.OnTrainClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentTrainsBinding
 import com.abrullc.spainonrails.details.trainDetailModule.TrainDetailFragment
@@ -17,7 +18,7 @@ import com.abrullc.spainonrails.mainModule.trainsModule.adapters.TrainsListAdapt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class TrainsFragment : Fragment(), OnClickListener {
+class TrainsFragment : Fragment(), OnTrainClickListener {
     private lateinit var mBinding: FragmentTrainsBinding
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mTrainAdapter: TrainsListAdapter
@@ -68,10 +69,10 @@ class TrainsFragment : Fragment(), OnClickListener {
         }, this, requireContext())
     }
 
-    override fun onClick(entityId: Int) {
+    override fun onTrainClick(trainId: Int) {
         val fragment = TrainDetailFragment().apply {
             arguments = Bundle().apply {
-                putInt("idTren", entityId)
+                putInt("idTren", trainId)
             }
         }
 
