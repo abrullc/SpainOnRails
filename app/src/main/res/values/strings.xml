@@ -64,4 +64,7 @@
     <string name="dialog_info_title">Información</string>
     <string name="future_development">Desarrollo futuro</string>
     <string name="logout">Cerrar sesión</string>
+    <string name="dialog_delte_user_title">Eliminar cuenta</string>
+    <string name="delete_user_info">Se necesita la contraseña del usuario para borrar la cuenta</string>
+    <string name="invalid_password">Contraseña incorrecta</string>
 </resources>
