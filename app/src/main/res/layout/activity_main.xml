@@ -33,7 +33,8 @@
                     android:src="@drawable/ic_menu"
                     app:tint="@color/md_theme_secondaryContainer_highContrast"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="@id/tvScreenTitle"
+                    app:layout_constraintBottom_toBottomOf="@id/tvScreenTitle"/>
 
                 <TextView
                     android:id="@+id/tvScreenTitle"
@@ -44,14 +45,13 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     app:layout_constraintStart_toEndOf="@id/imgNavigationDrawer"
                     app:layout_constraintEnd_toStartOf="@id/imgProfile"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/imgProfile"
+                    app:layout_constraintBottom_toBottomOf="@id/imgProfile" />
 
                 <ImageView
                     android:id="@+id/imgProfile"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/ic_profile"
-                    app:tint="@color/md_theme_secondaryContainer_highContrast"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
