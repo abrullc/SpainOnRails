@@ -4,6 +4,7 @@ import com.abrullc.spainonrails.common.utils.Constants
 import com.abrullc.spainonrails.retrofit.entities.Usuario
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -27,4 +28,7 @@ interface UsuarioService {
 
     @PUT(Constants.UPDATE_USUARIO_PATH)
     suspend fun updateUsuario(@Path("id") id: Int, @Body usuario: Usuario): Response<Usuario>
+
+    @DELETE(Constants.DELETE_USUARIO_PATH)
+    suspend fun deleteUsuario(@Path("id") id: Int): Response<Usuario>
 }
