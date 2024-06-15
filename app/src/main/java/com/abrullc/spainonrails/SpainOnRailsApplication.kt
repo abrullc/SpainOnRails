@@ -15,5 +15,6 @@ class SpainOnRailsApplication: Application() {
 
         // Logged user
         lateinit var usuario: Usuario
+        var isUsuarioUpdated = false
     }
 }
