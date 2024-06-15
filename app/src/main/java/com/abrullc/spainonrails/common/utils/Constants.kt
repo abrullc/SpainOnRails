@@ -2,6 +2,8 @@ package com.abrullc.spainonrails.common.utils
 
 object Constants {
     // [RUTAS]
+
+    // -- API
     const val BASE_URL = "http://spainonrails.navelsystems.es/"
 
     // -- USUARIOS
@@ -32,6 +34,7 @@ object Constants {
     const val RUTAS_PATH = "/rutas"
     const val RUTA_PATH = "/ruta/{id}"
     const val ESTACIONES_RUTA_PATH = "/ruta/{id}/estaciones"
+    const val TREN_RUTA_PATH = "/ruta/{id}/tren"
 
     // -- TRENES
     const val TRENES_PATH = "/trenes"
