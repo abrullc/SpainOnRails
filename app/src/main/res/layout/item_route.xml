@@ -73,7 +73,7 @@
                 android:id="@+id/tvDestination"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/cardview_route_finish"
+                tools:text="@string/cardview_route_end"
                 android:textColor="@color/md_theme_secondaryContainer_highContrast"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="@dimen/common_margin_default"
