@@ -17,4 +17,6 @@
     <dimen name="map_detail_height">256dp</dimen>
     <dimen name="app_bar_height">100dp</dimen>
     <dimen name="separator_size">6dp</dimen>
+    <dimen name="image_user_size">200dp</dimen>
+    <dimen name="user_app_bar_height">70dp</dimen>
 </resources>

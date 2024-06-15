@@ -4,8 +4,6 @@
     <string name="trains">Trenes</string>
     <string name="routes">Rutas</string>
     <string name="stations">Estaciones</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="screen_title">NombrePantalla</string>
     <string name="login_title">Bienvenido</string>
     <string name="login_subtitle">Inicia sesión o regístrate</string>
@@ -55,4 +53,15 @@
     <string name="route_description">Descripción de la ruta</string>
     <string name="estaciones_ruta_title">Estaciones de la ruta:</string>
     <string name="trenes_ruta_title">Trenes de la ruta:</string>
+    <string name="user_username">Nombre de usuario</string>
+    <string name="user_email">E-mail no especificado</string>
+    <string name="delete_user">Eliminar cuenta</string>
+    <string name="user_tickets">Mis billetes</string>
+    <string name="user_tavel_plans">Mis planes de viaje</string>
+    <string name="dialog_edit_user_title">Editar usuario</string>
+    <string name="dialog_edit_user">Aplicar</string>
+    <string name="profile">Perfil</string>
+    <string name="dialog_info_title">Información</string>
+    <string name="future_development">Desarrollo futuro</string>
+    <string name="logout">Cerrar sesión</string>
 </resources>
