@@ -44,6 +44,8 @@ class UserActivity : AppCompatActivity() {
             imgLogout.setOnClickListener {
                 TODO("Implementar función de log out")
             }
+
+            btnDeleteUser.setOnClickListener { deleteUsuario() }
         }
     }
 
@@ -160,5 +162,44 @@ class UserActivity : AppCompatActivity() {
                 setupUser()
             }
         }, this, this)
+    }
+
+    private fun deleteUsuario() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_delete_user, null)
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.dialog_delte_user_title)
+            .setMessage(R.string.delete_user_info)
+            .setView(dialogView)
+            .setPositiveButton(R.string.dialog_edit_user, null)
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
+
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positiveButton.setOnClickListener {
+            val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
+
+            if (password == currentUser.password) {
+                commonFunctions.launchLifeCycleScope({
+                    val service = SpainOnRailsApplication.retrofit.create(UsuarioService::class.java)
+                    val resultDeletedUsuario = service.deleteUsuario(currentUser.id).body()!!
+
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@UserActivity,
+                            "Usuario ${resultDeletedUsuario.username} eliminado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }, this, this)
+            } else {
+                commonFunctions.errorAlertDialog(getString(R.string.invalid_password), this@UserActivity)
+            }
+        }
+
+        commonUserFunctions.focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
     }
 }
