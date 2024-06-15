@@ -20,7 +20,6 @@
             android:name=".loginModule.LoginActivity"
             android:exported="true"
             android:screenOrientation="nosensor">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,6 +28,10 @@
         </activity>
         <activity
             android:name=".mainModule.MainActivity"
+            android:exported="false"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".userModule.UserActivity"
             android:exported="false"
             android:screenOrientation="nosensor"/>
 
