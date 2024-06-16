@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SpainOnRails</string>
+    <string name="app_name">Spain on Rails</string>
     <string name="home">Inicio</string>
     <string name="trains">Trenes</string>
     <string name="routes">Rutas</string>

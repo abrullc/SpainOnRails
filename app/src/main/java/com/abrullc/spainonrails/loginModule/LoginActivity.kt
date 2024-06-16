@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        loadImgPortada("http://spainonrails.navelsystems.es/images/stations/valenciaTermino.jpeg")
+        loadImgPortada("http://spainonrails.navelsystems.es/images/trains/alandalus.jpg")
 
         commonFunctions = CommonFunctions()
         commonUserFunctions = CommonUserFunctions(this, this, false)
@@ -223,8 +223,10 @@ class LoginActivity : AppCompatActivity() {
     private fun loadImgPortada(url: String) {
         Glide.with(this)
             .load(url)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(R.drawable.ic_train)
+            .error(R.drawable.ic_train)
             .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(mBinding.imgPortada)
     }
 }
