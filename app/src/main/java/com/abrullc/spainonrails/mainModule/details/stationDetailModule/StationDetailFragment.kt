@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.details.stationDetailModule
+package com.abrullc.spainonrails.mainModule.details.stationDetailModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +12,7 @@ import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentStationDetailBinding
-import com.abrullc.spainonrails.details.routeDetailModule.RouteDetailFragment
+import com.abrullc.spainonrails.mainModule.details.routeDetailModule.RouteDetailFragment
 import com.abrullc.spainonrails.mainModule.routesModule.adapters.RoutesListAdapter
 import com.abrullc.spainonrails.retrofit.entities.Estacion
 import com.abrullc.spainonrails.retrofit.entities.PuntoInteres

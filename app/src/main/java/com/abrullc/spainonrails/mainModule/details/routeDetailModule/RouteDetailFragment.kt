@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.details.routeDetailModule
+package com.abrullc.spainonrails.mainModule.details.routeDetailModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,21 +12,17 @@ import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.interfaces.OnTrainClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentRouteDetailBinding
-import com.abrullc.spainonrails.details.stationDetailModule.StationDetailFragment
-import com.abrullc.spainonrails.details.trainDetailModule.TrainDetailFragment
+import com.abrullc.spainonrails.mainModule.details.stationDetailModule.StationDetailFragment
+import com.abrullc.spainonrails.mainModule.details.trainDetailModule.TrainDetailFragment
 import com.abrullc.spainonrails.mainModule.stationsModule.adapters.StationsListAdapter
 import com.abrullc.spainonrails.mainModule.trainsModule.adapters.TrainsListAdapter
 import com.abrullc.spainonrails.retrofit.entities.Ruta
-import com.abrullc.spainonrails.retrofit.entities.Tren
-import com.abrullc.spainonrails.retrofit.services.EstacionService
 import com.abrullc.spainonrails.retrofit.services.RutaService
-import com.abrullc.spainonrails.retrofit.services.TrenService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RouteDetailFragment : Fragment(), OnClickListener, OnTrainClickListener {
     private var idRuta: Int = 0
-    private lateinit var ruta: Ruta
     private lateinit var commonFunctions: CommonFunctions
     private lateinit var mBinding: FragmentRouteDetailBinding
     private lateinit var mStationAdapter: StationsListAdapter

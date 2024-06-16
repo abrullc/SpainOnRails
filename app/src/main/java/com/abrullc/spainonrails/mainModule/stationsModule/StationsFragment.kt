@@ -12,7 +12,7 @@ import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentStationsBinding
-import com.abrullc.spainonrails.details.stationDetailModule.StationDetailFragment
+import com.abrullc.spainonrails.mainModule.details.stationDetailModule.StationDetailFragment
 import com.abrullc.spainonrails.retrofit.entities.Estacion
 import com.abrullc.spainonrails.retrofit.services.EstacionService
 import com.abrullc.spainonrails.mainModule.stationsModule.adapters.StationsListAdapter

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.spainonrails.R
-import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.interfaces.OnTrainClickListener
 import com.abrullc.spainonrails.databinding.ItemTrainBinding
 import com.abrullc.spainonrails.retrofit.entities.Tren

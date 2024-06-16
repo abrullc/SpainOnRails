@@ -1,4 +1,4 @@
-package com.abrullc.spainonrails.details.trainDetailModule
+package com.abrullc.spainonrails.mainModule.details.trainDetailModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,10 +12,9 @@ import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentTrainDetailBinding
-import com.abrullc.spainonrails.details.routeDetailModule.RouteDetailFragment
+import com.abrullc.spainonrails.mainModule.details.routeDetailModule.RouteDetailFragment
 import com.abrullc.spainonrails.mainModule.routesModule.adapters.RoutesListAdapter
 import com.abrullc.spainonrails.retrofit.entities.Tren
-import com.abrullc.spainonrails.retrofit.services.RutaService
 import com.abrullc.spainonrails.retrofit.services.TrenService
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy

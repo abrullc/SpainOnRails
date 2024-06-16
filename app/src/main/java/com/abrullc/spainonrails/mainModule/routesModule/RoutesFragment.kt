@@ -11,7 +11,7 @@ import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.interfaces.OnClickListener
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.FragmentRoutesBinding
-import com.abrullc.spainonrails.details.routeDetailModule.RouteDetailFragment
+import com.abrullc.spainonrails.mainModule.details.routeDetailModule.RouteDetailFragment
 import com.abrullc.spainonrails.retrofit.services.RutaService
 import com.abrullc.spainonrails.mainModule.routesModule.adapters.RoutesListAdapter
 import kotlinx.coroutines.Dispatchers

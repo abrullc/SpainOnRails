@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/drawer_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_profile"/>
+    <item
         android:id="@+id/drawer_home"
         android:title="@string/home"
         android:icon="@drawable/ic_home"/>
@@ -19,4 +23,9 @@
         android:id="@+id/drawer_stations"
         android:title="@string/stations"
         android:icon="@drawable/ic_station"/>
+
+    <item
+        android:id="@+id/drawer_logout"
+        android:title="@string/logout"
+        android:icon="@drawable/ic_logout"/>
 </menu>

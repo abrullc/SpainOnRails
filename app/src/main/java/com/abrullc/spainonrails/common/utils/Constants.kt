@@ -11,6 +11,8 @@ object Constants {
     const val USUARIO_PATH = "/usuario/{id}"
     const val VALIDATE_USUARIO_PATH = "/usuario/validate"
     const val VALIDATE_NEW_USUARIO_PATH = "/usuario/{username}/validate"
+    const val UPDATE_USUARIO_PATH = "/usuario/{id}"
+    const val DELETE_USUARIO_PATH = "/usuario/{id}"
 
     // -- ESTACIONES
     const val ESTACIONES_PATH = "/estaciones"
