@@ -10,6 +10,7 @@ import com.abrullc.spainonrails.R
 import com.abrullc.spainonrails.SpainOnRailsApplication
 import com.abrullc.spainonrails.common.utils.CommonFunctions
 import com.abrullc.spainonrails.databinding.ActivityMainBinding
+import com.abrullc.spainonrails.loginModule.LoginActivity
 import com.abrullc.spainonrails.mainModule.homeModule.HomeFragment
 import com.abrullc.spainonrails.mainModule.routesModule.RoutesFragment
 import com.abrullc.spainonrails.mainModule.stationsModule.StationsFragment
@@ -39,6 +40,21 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(HomeFragment(), getString(R.string.home))
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (SpainOnRailsApplication.isLogoutRequired) { finish() }
+
+        Glide.with(this@MainActivity)
+            .load(SpainOnRailsApplication.usuario.imagen)
+            .placeholder(R.drawable.ic_profile)
+            .error(R.drawable.ic_profile)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .centerCrop()
+            .circleCrop()
+            .into(mBinding.imgProfile)
+    }
+
     private fun initListeners() {
         with(mBinding) {
             imgNavigationDrawer.setOnClickListener {
@@ -46,15 +62,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             imgProfile.setOnClickListener { goToUserProfile() }
-
-            Glide.with(this@MainActivity)
-                .load(SpainOnRailsApplication.usuario.imagen)
-                .placeholder(R.drawable.ic_profile)
-                .error(R.drawable.ic_profile)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .circleCrop()
-                .into(imgProfile)
         }
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -84,7 +91,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.drawer_logout -> {
-                    TODO("Implementar función de log out")
+                    commonFunctions.logout(this@MainActivity) {
+                        finish()
+                    }
                 }
             }
 
@@ -145,7 +154,18 @@ class MainActivity : AppCompatActivity() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
+
+            if (currentFragment is TrainsFragment || currentFragment is RoutesFragment || currentFragment is StationsFragment) {
+                replaceFragment(HomeFragment(), getString(R.string.home))
+                bottomNavigationView.menu.findItem(R.id.bottom_home).isChecked = true
+            } else if (currentFragment is HomeFragment) {
+                commonFunctions.logout(this@MainActivity) {
+                    finish()
+                }
+            } else {
+                super.onBackPressed()
+            }
         }
     }
 }

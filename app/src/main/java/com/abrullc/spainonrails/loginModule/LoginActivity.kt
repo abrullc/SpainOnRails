@@ -61,7 +61,23 @@ class LoginActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (SpainOnRailsApplication.isUsuarioUpdated) {
+        if (SpainOnRailsApplication.isLogoutRequired) {
+            val preferences = getPreferences(MODE_PRIVATE)
+
+            with(mBinding) {
+                etUsername.setText("")
+                etPassword.setText("")
+                cbRememberPass.isChecked = false
+            }
+
+            with(preferences.edit()) {
+                putInt(getString(R.string.sp_id_user), 0)
+                putBoolean(getString(R.string.sp_remember_user), false)
+                    .apply()
+            }
+
+            SpainOnRailsApplication.isLogoutRequired = false
+        } else if (SpainOnRailsApplication.isUsuarioUpdated) {
             with(mBinding) {
                 etUsername.setText(SpainOnRailsApplication.usuario.username)
                 etPassword.setText(SpainOnRailsApplication.usuario.password)
