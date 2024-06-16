@@ -16,17 +16,17 @@ class CommonUserFunctions(val context: Context, val lifecycleOwner: LifecycleOwn
     private val commonFunctions = CommonFunctions()
 
     fun validateFields(username: String, password: String, image: String): Boolean {
-        if (username.isEmpty()) {
+        if (username.trim().isEmpty()) {
             commonFunctions.errorAlertDialog(getString(context, R.string.error_required_username), context)
             return false
         }
 
-        if (password.isEmpty()) {
+        if (password.trim().isEmpty()) {
             commonFunctions.errorAlertDialog(getString(context, R.string.error_required_password), context)
             return false
         }
 
-        if (image.isNotEmpty() && !commonFunctions.validateURL(image)) {
+        if (image.trim().isNotEmpty() && !commonFunctions.validateURL(image)) {
             commonFunctions.errorAlertDialog(getString(context, R.string.error_url), context)
             return false
         }
@@ -35,12 +35,12 @@ class CommonUserFunctions(val context: Context, val lifecycleOwner: LifecycleOwn
     }
 
     fun checkUserFields(username: String, password: String): Boolean {
-        if (username.isEmpty()) {
+        if (username.trim().isEmpty()) {
             commonFunctions.errorAlertDialog(getString(context, R.string.error_username_empty), context)
             return false
         }
 
-        if (password.isEmpty()) {
+        if (password.trim().isEmpty()) {
             commonFunctions.errorAlertDialog(getString(context, R.string.error_password_empty), context)
             return false
         }
@@ -49,7 +49,7 @@ class CommonUserFunctions(val context: Context, val lifecycleOwner: LifecycleOwn
     }
 
     fun checkOptionalField(field: String): String? {
-        if (field.isEmpty()) {
+        if (field.trim().isEmpty()) {
             return null
         } else {
             return field
@@ -61,7 +61,7 @@ class CommonUserFunctions(val context: Context, val lifecycleOwner: LifecycleOwn
             var errorStr: String? = null
 
             if (!focused) {
-                if(textInput.text.toString().isEmpty()) {
+                if(textInput.text.toString().trim().isEmpty()) {
                     errorStr = getString(context, R.string.error_required_field)
                 }
             }
@@ -74,7 +74,7 @@ class CommonUserFunctions(val context: Context, val lifecycleOwner: LifecycleOwn
         textInput.onFocusChangeListener = View.OnFocusChangeListener { view, focused ->
             var errorStr: String? = null
 
-            val username = textInput.text.toString()
+            val username = textInput.text.toString().trim()
 
             if (!focused) {
                 if (username.isEmpty()) {
@@ -105,7 +105,7 @@ class CommonUserFunctions(val context: Context, val lifecycleOwner: LifecycleOwn
     }
 
     fun checkImageField(imageInput: TextInputEditText): Boolean {
-        return !(imageInput.text.toString().isNotEmpty() && !commonFunctions.validateURL(imageInput.text.toString()))
+        return !(imageInput.text.toString().trim().isNotEmpty() && !commonFunctions.validateURL(imageInput.text.toString()))
     }
 
     fun focusChangeListenerImage(layout: TextInputLayout, imageInput: TextInputEditText) {
