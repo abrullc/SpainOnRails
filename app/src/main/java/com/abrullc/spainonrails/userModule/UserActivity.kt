@@ -1,6 +1,7 @@
 package com.abrullc.spainonrails.userModule
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -35,14 +36,14 @@ class UserActivity : AppCompatActivity() {
         setupUser()
 
         with(mBinding) {
-            imgGoBack.setOnClickListener {
-                TODO("Implementar función de retroceso")
-            }
+            imgGoBack.setOnClickListener { finish() }
 
             imgUserEdit.setOnClickListener { editUser() }
 
             imgLogout.setOnClickListener {
-                TODO("Implementar función de log out")
+                commonFunctions.logout(this@UserActivity) {
+                    finish()
+                }
             }
 
             btnDeleteUser.setOnClickListener { deleteUsuario() }
@@ -67,6 +68,8 @@ class UserActivity : AppCompatActivity() {
             val email = currentUser.email
             if (!email.isNullOrEmpty()) {
                 tvEmail.text = email
+            } else {
+                tvEmail.text = getString(R.string.email_not_specified)
             }
 
             cardUserTickets.setOnClickListener {
@@ -109,7 +112,7 @@ class UserActivity : AppCompatActivity() {
         positiveButton.setOnClickListener {
             val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString().trim()
             val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
-            val email = dialogView.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
+            val email: String = dialogView.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
             val image = dialogView.findViewById<TextInputEditText>(R.id.etImage).text.toString().trim()
 
             if (commonUserFunctions.validateFields(username, password, image)) {
@@ -193,6 +196,10 @@ class UserActivity : AppCompatActivity() {
                             "Usuario ${resultDeletedUsuario.username} eliminado",
                             Toast.LENGTH_SHORT
                         ).show()
+
+                        SpainOnRailsApplication.isLogoutRequired = true
+
+                        finish()
                     }
                 }, this, this)
             } else {
