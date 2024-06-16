@@ -54,7 +54,8 @@
     <string name="estaciones_ruta_title">Estaciones de la ruta:</string>
     <string name="trenes_ruta_title">Trenes de la ruta:</string>
     <string name="user_username">Nombre de usuario</string>
-    <string name="user_email">E-mail no especificado</string>
+    <string name="user_email">usuario@direccioncorreo.com</string>
+    <string name="email_not_specified">E-mail no especificado</string>
     <string name="delete_user">Eliminar cuenta</string>
     <string name="user_tickets">Mis billetes</string>
     <string name="user_tavel_plans">Mis planes de viaje</string>
@@ -67,4 +68,7 @@
     <string name="dialog_delte_user_title">Eliminar cuenta</string>
     <string name="delete_user_info">Se necesita la contraseña del usuario para borrar la cuenta</string>
     <string name="invalid_password">Contraseña incorrecta</string>
+    <string name="logout_ask">¿Deseas cerrar sesión?</string>
+    <string name="checking_out">Cerrando sesión...</string>
+    <string name="dialog_logout">Cerrar sesión</string>
 </resources>
